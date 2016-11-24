@@ -40,7 +40,7 @@
         "@opam-alpha/ctypes-foreign": "*",
         "@opam-alpha/ocamlfind": "*",
         "@opam-alpha/ctypes": ">= 0.4.0",
-        "@opam-alpha/tsdl": "https://github.com/bsansouci/tsdl.git#packagejson",
+        "tsdl-actual": "https://github.com/bsansouci/tsdl.git#packagejson",
         "dependency-env": "https://github.com/npm-ml/dependency-env.git",
         "substs": "https://github.com/yunxing/substs.git",
         "@opam-alpha/ocamlbuild": "*",
