@@ -29,7 +29,7 @@
         },
         "FINDLIB": {
             "scope": "global",
-            "val": "$tgls-actual__target_dir/ocamlfind/lib:$FINDLIB"
+            "val": "$tgls_actual__target_dir/ocamlfind/lib:$FINDLIB"
         },
         "version": {
             "scope": "global",
@@ -37,7 +37,7 @@
         },
         "PATH": {
             "scope": "global",
-            "val": "$tgls-actual__target_dir/ocamlfind/bin:$PATH"
+            "val": "$tgls_actual__target_dir/ocamlfind/bin:$PATH"
         }
       }
     },
