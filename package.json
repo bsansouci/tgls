@@ -6,11 +6,11 @@
         "@opam/ctypes-foreign": "*",
         "@opam/ocamlfind": "*",
         "@opam/ctypes": ">= 0.4.0",
-        "tsdl-actual": "https://github.com/bsansouci/tsdl.git#packagejson",
-        "substs": "https://github.com/yunxing/substs.git",
+        "tsdl-actual": "bsansouci/tsdl.git#esy",
+        "substs": "yunxing/substs.git",
         "@opam/ocamlbuild": "*",
         "@opam/result": "*",
-        "opam-installer-bin": "https://github.com/yunxing/opam-installer-bin.git"
+        "opam-installer-bin": "yunxing/opam-installer-bin.git"
     },
     "esy": {
       "build": ["ocaml pkg/pkg.ml build --pinned false && (opam-installer --prefix=$opam_prefix || true)"],
