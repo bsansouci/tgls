@@ -1,6 +1,20 @@
 {
-    "name": "tgls-actual",
-    "exportedEnvVars": {
+    "name": "tgls-actual", 
+    "version": "0.8.4",
+    "dependencies": {
+        "@opam/topkg": "*",
+        "@opam/ctypes-foreign": "*",
+        "@opam/ocamlfind": "*",
+        "@opam/ctypes": ">= 0.4.0",
+        "tsdl-actual": "https://github.com/bsansouci/tsdl.git#packagejson",
+        "substs": "https://github.com/yunxing/substs.git",
+        "@opam/ocamlbuild": "*",
+        "@opam/result": "*",
+        "opam-installer-bin": "https://github.com/yunxing/opam-installer-bin.git"
+    },
+    "esy": {
+      "build": ["ocaml pkg/pkg.ml build --pinned false && (opam-installer --prefix=$opam_prefix || true)"],
+      "exportedEnvVars": {
         "tgls_installed": {
             "global": true,
             "globalCollisionBehavior": "clobber",
@@ -33,25 +47,9 @@
             "globalCollisionBehavior": "joinPath",
             "val": "./_build/ocamlfind/bin"
         }
-    },
-    "version": "0.8.4",
-    "dependencies": {
-        "@opam-alpha/topkg": "*",
-        "@opam-alpha/ctypes-foreign": "*",
-        "@opam-alpha/ocamlfind": "*",
-        "@opam-alpha/ctypes": ">= 0.4.0",
-        "tsdl-actual": "https://github.com/bsansouci/tsdl.git#packagejson",
-        "dependency-env": "https://github.com/npm-ml/dependency-env.git",
-        "substs": "https://github.com/yunxing/substs.git",
-        "@opam-alpha/ocamlbuild": "*",
-        "@opam-alpha/result": "*",
-        "nopam": "https://github.com/yunxing/nopam.git",
-        "opam-installer-bin": "https://github.com/yunxing/opam-installer-bin.git"
-    },
-    "scripts": {
-        "postinstall": "eval $(dependencyEnv) && nopam && ocaml pkg/pkg.ml build --pinned false && (opam-installer --prefix=$opam_prefix || true)"
+      }
     },
     "peerDependencies": {
-        "@opam-alpha/ocaml": ">= 4.01.0"
+        "esy-ocaml/ocaml#esy": ">= 4.01.0"
     }
 }
