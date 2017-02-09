@@ -16,36 +16,28 @@
       "build": ["ocaml pkg/pkg.ml build --pinned false && (opam-installer --prefix=$opam_prefix || true)"],
       "exportedEnvVars": {
         "tgls_installed": {
-            "global": true,
-            "globalCollisionBehavior": "clobber",
+            "scope": "global",
             "val": "true"
         },
         "tgls_enable": {
-            "global": true,
-            "globalCollisionBehavior": "clobber",
+            "scope": "global",
             "val": "enable"
         },
         "tgls_version": {
-            "global": true,
-            "globalCollisionBehavior": "clobber",
+            "scope": "global",
             "val": "0.8.4"
         },
         "FINDLIB": {
-            "global": true,
-            "resolveAsRelativePath": true,
-            "globalCollisionBehavior": "joinPath",
-            "val": "./_build/ocamlfind/lib"
+            "scope": "global",
+            "val": "$tgls-actual__target_dir/ocamlfind/lib:$FINDLIB"
         },
         "version": {
-            "global": true,
-            "globalCollisionBehavior": "clobber",
+            "scope": "global",
             "val": "0.8.4"
         },
         "PATH": {
-            "global": true,
-            "resolveAsRelativePath": true,
-            "globalCollisionBehavior": "joinPath",
-            "val": "./_build/ocamlfind/bin"
+            "scope": "global",
+            "val": "$tgls-actual__target_dir/ocamlfind/bin:$PATH"
         }
       }
     },
