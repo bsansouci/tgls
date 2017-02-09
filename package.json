@@ -49,7 +49,7 @@
         }
       }
     },
-    "peerDependencies": {
-        "esy-ocaml/ocaml#esy": ">= 4.01.0"
+    "debDependencies": {
+      "ocaml": "esy-ocaml/ocaml#esy"
     }
 }
