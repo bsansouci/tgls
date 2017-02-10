@@ -33,3 +33,5 @@ true: thread, bin_annot, safe_string, package(bytes)
 <test/linkgl4.{byte,native}> : use_gl4
 <test/linkgles2.{byte,native}> : use_gles2
 <test/linkgles3.{byte,native}> : use_gles3
+
+<node_modules>: -traverse
