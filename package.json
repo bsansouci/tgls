@@ -15,7 +15,7 @@
     "esy": {
       "build": ["ocaml pkg/pkg.ml build --pinned false && (opam-installer --prefix=$opam_prefix || true)"]
     },
-    "debDependencies": {
+    "devDependencies": {
       "ocaml": "esy-ocaml/ocaml#esy"
     }
 }
