@@ -2,14 +2,14 @@
     "name": "tgls-actual", 
     "version": "0.8.4",
     "dependencies": {
-        "@opam/topkg": "*",
-        "@opam/ctypes-foreign": "*",
-        "@opam/ocamlfind": "*",
-        "@opam/ctypes": ">= 0.4.0",
+        "@opam-alpha/topkg": "*",
+        "@opam-alpha/ctypes-foreign": "*",
+        "@opam-alpha/ocamlfind": "*",
+        "@opam-alpha/ctypes": ">= 0.4.0",
         "tsdl-actual": "bsansouci/tsdl.git#esy",
         "substs": "esy-ocaml/substs.git",
-        "@opam/ocamlbuild": "*",
-        "@opam/result": "*",
+        "@opam-alpha/ocamlbuild": "*",
+        "@opam-alpha/result": "*",
         "opam-installer-bin": "esy-ocaml/opam-installer-bin.git"
     },
     "esy": {
