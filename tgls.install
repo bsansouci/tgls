@@ -1,0 +1,79 @@
+# tgls
+
+doc: [
+  "_build/CHANGES.md" {"CHANGES.md"}
+  "_build/LICENSE.md" {"LICENSE.md"}
+  "_build/README.md" {"README.md"}
+  "_build/test/assert_sizes.c" {"assert_sizes.c"}
+  "_build/test/linkgl3.ml" {"linkgl3.ml"}
+  "_build/test/linkgl4.ml" {"linkgl4.ml"}
+  "_build/test/linkgles2.ml" {"linkgles2.ml"}
+  "_build/test/linkgles3.ml" {"linkgles3.ml"}
+  "_build/test/trigl3.ml" {"trigl3.ml"}
+  "_build/test/trigl4.ml" {"trigl4.ml"}
+  "_build/test/trigles2.ml" {"trigles2.ml"}
+  "_build/test/trigles3.ml" {"trigles3.ml"} ]
+lib: [
+  "_build/opam" {"opam"}
+  "_build/pkg/META" {"META"}
+  "_build/src/libtgl3.a" {"libtgl3.a"}
+  "_build/src/libtgl4.a" {"libtgl4.a"}
+  "_build/src/libtgles2.a" {"libtgles2.a"}
+  "_build/src/libtgles3.a" {"libtgles3.a"}
+  "_build/src/tgl3.a" {"tgl3.a"}
+  "_build/src/tgl3.cma" {"tgl3.cma"}
+  "_build/src/tgl3.cmi" {"tgl3.cmi"}
+  "?_build/src/tgl3.cmti" {"tgl3.cmti"}
+  "_build/src/tgl3.cmx" {"tgl3.cmx"}
+  "_build/src/tgl3.cmxa" {"tgl3.cmxa"}
+  "_build/src/tgl3.cmxs" {"tgl3.cmxs"}
+  "_build/src/tgl3.mli" {"tgl3.mli"}
+  "_build/src/tgl3_top.a" {"tgl3_top.a"}
+  "_build/src/tgl3_top.cma" {"tgl3_top.cma"}
+  "_build/src/tgl3_top.cmx" {"tgl3_top.cmx"}
+  "_build/src/tgl3_top.cmxa" {"tgl3_top.cmxa"}
+  "_build/src/tgl3_top.cmxs" {"tgl3_top.cmxs"}
+  "_build/src/tgl4.a" {"tgl4.a"}
+  "_build/src/tgl4.cma" {"tgl4.cma"}
+  "_build/src/tgl4.cmi" {"tgl4.cmi"}
+  "?_build/src/tgl4.cmti" {"tgl4.cmti"}
+  "_build/src/tgl4.cmx" {"tgl4.cmx"}
+  "_build/src/tgl4.cmxa" {"tgl4.cmxa"}
+  "_build/src/tgl4.cmxs" {"tgl4.cmxs"}
+  "_build/src/tgl4.mli" {"tgl4.mli"}
+  "_build/src/tgl4_top.a" {"tgl4_top.a"}
+  "_build/src/tgl4_top.cma" {"tgl4_top.cma"}
+  "_build/src/tgl4_top.cmx" {"tgl4_top.cmx"}
+  "_build/src/tgl4_top.cmxa" {"tgl4_top.cmxa"}
+  "_build/src/tgl4_top.cmxs" {"tgl4_top.cmxs"}
+  "_build/src/tgles2.a" {"tgles2.a"}
+  "_build/src/tgles2.cma" {"tgles2.cma"}
+  "_build/src/tgles2.cmi" {"tgles2.cmi"}
+  "?_build/src/tgles2.cmti" {"tgles2.cmti"}
+  "_build/src/tgles2.cmx" {"tgles2.cmx"}
+  "_build/src/tgles2.cmxa" {"tgles2.cmxa"}
+  "_build/src/tgles2.cmxs" {"tgles2.cmxs"}
+  "_build/src/tgles2.mli" {"tgles2.mli"}
+  "_build/src/tgles2_top.a" {"tgles2_top.a"}
+  "_build/src/tgles2_top.cma" {"tgles2_top.cma"}
+  "_build/src/tgles2_top.cmx" {"tgles2_top.cmx"}
+  "_build/src/tgles2_top.cmxa" {"tgles2_top.cmxa"}
+  "_build/src/tgles2_top.cmxs" {"tgles2_top.cmxs"}
+  "_build/src/tgles3.a" {"tgles3.a"}
+  "_build/src/tgles3.cma" {"tgles3.cma"}
+  "_build/src/tgles3.cmi" {"tgles3.cmi"}
+  "?_build/src/tgles3.cmti" {"tgles3.cmti"}
+  "_build/src/tgles3.cmx" {"tgles3.cmx"}
+  "_build/src/tgles3.cmxa" {"tgles3.cmxa"}
+  "_build/src/tgles3.cmxs" {"tgles3.cmxs"}
+  "_build/src/tgles3.mli" {"tgles3.mli"}
+  "_build/src/tgles3_top.a" {"tgles3_top.a"}
+  "_build/src/tgles3_top.cma" {"tgles3_top.cma"}
+  "_build/src/tgles3_top.cmx" {"tgles3_top.cmx"}
+  "_build/src/tgles3_top.cmxa" {"tgles3_top.cmxa"}
+  "_build/src/tgles3_top.cmxs" {"tgles3_top.cmxs"} ]
+stublibs: [
+  "_build/src/dlltgl3.so" {"dlltgl3.so"}
+  "_build/src/dlltgl4.so" {"dlltgl4.so"}
+  "_build/src/dlltgles2.so" {"dlltgles2.so"}
+  "_build/src/dlltgles3.so" {"dlltgles3.so"} ]

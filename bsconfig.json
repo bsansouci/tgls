@@ -1,0 +1,8 @@
+{
+  "name": "Tgls",
+  "sources": {
+    "dir": "src",
+    "files": ["tgl3_packed.ml"]
+  },
+  "bs-dependencies": ["ctypes"],
+}
