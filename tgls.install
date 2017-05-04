@@ -3,16 +3,7 @@
 doc: [
   "_build/CHANGES.md" {"CHANGES.md"}
   "_build/LICENSE.md" {"LICENSE.md"}
-  "_build/README.md" {"README.md"}
-  "_build/test/assert_sizes.c" {"assert_sizes.c"}
-  "_build/test/linkgl3.ml" {"linkgl3.ml"}
-  "_build/test/linkgl4.ml" {"linkgl4.ml"}
-  "_build/test/linkgles2.ml" {"linkgles2.ml"}
-  "_build/test/linkgles3.ml" {"linkgles3.ml"}
-  "_build/test/trigl3.ml" {"trigl3.ml"}
-  "_build/test/trigl4.ml" {"trigl4.ml"}
-  "_build/test/trigles2.ml" {"trigles2.ml"}
-  "_build/test/trigles3.ml" {"trigles3.ml"} ]
+  "_build/README.md" {"README.md"} ]
 lib: [
   "_build/opam" {"opam"}
   "_build/pkg/META" {"META"}

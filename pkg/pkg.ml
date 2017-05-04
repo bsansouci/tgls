@@ -25,15 +25,15 @@ let () =
        Pkg.mllib ~api:[] "src/tgl4_top.mllib";
        Pkg.mllib ~api:[] "src/tgles2_top.mllib";
        Pkg.mllib ~api:[] "src/tgles3_top.mllib";
-       Pkg.test ~run:false "test/trigl3";
+       (* Pkg.test ~run:false "test/trigl3";
        Pkg.test ~run:false "test/trigl4";
        Pkg.test ~run:false "test/trigles2";
        Pkg.test ~run:false "test/trigles3";
        Pkg.test ~run:false "test/linkgl3";
        Pkg.test ~run:false "test/linkgl4";
        Pkg.test ~run:false "test/linkgles2";
-       Pkg.test ~run:false "test/linkgles3";
-       Pkg.doc "test/assert_sizes.c";
+       Pkg.test ~run:false "test/linkgles3"; *)
+       (* Pkg.doc "test/assert_sizes.c";
        Pkg.doc "test/trigl3.ml";
        Pkg.doc "test/trigl4.ml";
        Pkg.doc "test/trigles2.ml";
@@ -41,4 +41,5 @@ let () =
        Pkg.doc "test/linkgl3.ml";
        Pkg.doc "test/linkgl4.ml";
        Pkg.doc "test/linkgles2.ml";
-       Pkg.doc "test/linkgles3.ml";]
+       Pkg.doc "test/linkgles3.ml"; *)
+       ]
