@@ -1,44 +1,13 @@
 {
-    "name": "tgls",
-    "exportedEnvVars": {
-        "tgls_installed": {
-            "global": true,
-            "globalCollisionBehavior": "clobber",
-            "val": "true"
-        },
-        "tgls_enable": {
-            "global": true,
-            "globalCollisionBehavior": "clobber",
-            "val": "enable"
-        },
-        "tgls_version": {
-            "global": true,
-            "globalCollisionBehavior": "clobber",
-            "val": "0.8.4"
-        },
-        "FINDLIB": {
-            "global": true,
-            "resolveAsRelativePath": true,
-            "globalCollisionBehavior": "joinPath",
-            "val": "./_build/ocamlfind/lib"
-        },
-        "version": {
-            "global": true,
-            "globalCollisionBehavior": "clobber",
-            "val": "0.8.4"
-        },
-        "PATH": {
-            "global": true,
-            "resolveAsRelativePath": true,
-            "globalCollisionBehavior": "joinPath",
-            "val": "./_build/ocamlfind/bin"
-        }
-    },
-    "version": "0.8.4",
-    "scripts": {
-        "postinstall": "eval $(dependencyEnv) && nopam && ocaml pkg/pkg.ml build --pinned false && (opam-installer --prefix=$opam_prefix || true)"
-    },
-    "peerDependencies": {
-        "esy/ocaml#esy": ">= 4.01.0"
-    }
+  "name": "tgls",
+  "version": "0.8.4",
+  "scripts": {
+    "postinstall": "eval $(dependencyEnv) && nopam && ocaml pkg/pkg.ml build --pinned false && (opam-installer --prefix=$opam_prefix || true)"
+  },
+  "dependencies": {
+    "ctypes": "bsansouci/ocaml-ctypes#bsb-support"
+  },
+  "peerDependencies": {
+    "esy/ocaml#esy": ">= 4.01.0"
+  }
 }
