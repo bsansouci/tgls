@@ -2,10 +2,13 @@
   "name": "tgls",
   "version": "0.8.4",
   "scripts": {
-    "postinstall": "eval $(dependencyEnv) && nopam && ocaml pkg/pkg.ml build --pinned false && (opam-installer --prefix=$opam_prefix || true)"
+    "postinstall": "ocaml pkg/pkg.ml build --pinned false && (opam-installer --prefix=$opam_prefix || true)"
   },
   "dependencies": {
     "ctypes": "bsansouci/ocaml-ctypes#bsb-support"
+  },
+  "devDependencies": {
+    "bs-platform": "bsansouci/bucklescript#simple-native-compilation"
   },
   "peerDependencies": {
     "esy/ocaml#esy": ">= 4.01.0"
