@@ -8,6 +8,6 @@
     "bs-platform": "bsansouci/bucklescript#simple-native-compilation"
   },
   "peerDependencies": {
-    "esy/ocaml#esy": ">= 4.01.0"
+    "@opam-alpha/ocaml": ">= 4.01.0"
   }
 }
