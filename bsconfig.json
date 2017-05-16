@@ -5,4 +5,5 @@
     "files": ["tgl3_packed.ml"]
   },
   "bs-dependencies": ["ctypes"],
+  "allowed-build-kinds": ["bytecode", "native"],
 }
