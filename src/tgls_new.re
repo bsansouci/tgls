@@ -44,41 +44,71 @@ type textureT;
 /* might not work because passing stack pointer instead of heap pointer (see warning) */
 external genTextures : int => array textureT = "TglGenTextures";
 
-type textureUnitT =
-  | GL_TEXTURE0
-  | GL_TEXTURE1
-  | GL_TEXTURE2
-  | GL_TEXTURE3
-  | GL_TEXTURE4
-  | GL_TEXTURE5
-  | GL_TEXTURE6
-  | GL_TEXTURE7
-  | GL_TEXTURE8
-  | GL_TEXTURE9
-  | GL_TEXTURE10
-  | GL_TEXTURE11
-  | GL_TEXTURE12
-  | GL_TEXTURE13
-  | GL_TEXTURE14
-  | GL_TEXTURE15
-  | GL_TEXTURE16
-  | GL_TEXTURE17
-  | GL_TEXTURE18
-  | GL_TEXTURE19
-  | GL_TEXTURE20
-  | GL_TEXTURE21
-  | GL_TEXTURE22
-  | GL_TEXTURE23
-  | GL_TEXTURE24
-  | GL_TEXTURE25
-  | GL_TEXTURE26
-  | GL_TEXTURE27
-  | GL_TEXTURE28
-  | GL_TEXTURE29
-  | GL_TEXTURE30
-  | GL_TEXTURE31;
+let gl_texture0 = 33984;
 
-external activeTexture : textureUnitT => unit = "TglActiveTexture";
+let gl_texture1 = 33985;
+
+let gl_texture2 = 33986;
+
+let gl_texture3 = 33987;
+
+let gl_texture4 = 33988;
+
+let gl_texture5 = 33989;
+
+let gl_texture6 = 33990;
+
+let gl_texture7 = 33991;
+
+let gl_texture8 = 33992;
+
+let gl_texture9 = 33993;
+
+let gl_texture10 = 33994;
+
+let gl_texture11 = 33995;
+
+let gl_texture12 = 33996;
+
+let gl_texture13 = 33997;
+
+let gl_texture14 = 33998;
+
+let gl_texture15 = 33999;
+
+let gl_texture16 = 34000;
+
+let gl_texture17 = 34001;
+
+let gl_texture18 = 34002;
+
+let gl_texture19 = 34003;
+
+let gl_texture20 = 34004;
+
+let gl_texture21 = 34005;
+
+let gl_texture22 = 34006;
+
+let gl_texture23 = 34007;
+
+let gl_texture24 = 34008;
+
+let gl_texture25 = 34009;
+
+let gl_texture26 = 34010;
+
+let gl_texture27 = 34011;
+
+let gl_texture28 = 34012;
+
+let gl_texture29 = 34013;
+
+let gl_texture30 = 34014;
+
+let gl_texture31 = 34015;
+
+external activeTexture : int => unit = "TglActiveTexture";
 
 let gl_texture_1d = 3552;
 

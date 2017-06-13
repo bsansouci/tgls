@@ -116,8 +116,7 @@ CAMLprim value TglGenTextures(value count) {
 
 void TglActiveTexture(value textureUnit) {
   CAMLparam1(textureUnit);
-  int offset = 33984;
-  glActiveTexture(offset + Int_val(textureUnit));
+  glActiveTexture(Int_val(textureUnit));
   CAMLreturn0;
 }
 
