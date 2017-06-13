@@ -190,11 +190,6 @@ void TglUniform1f(value location, value v) {
 
 void TglBufferData(value target, value data, value usage) {
   CAMLparam3(target, data, usage);
-  // printf("size of array %d\n", caml_ba_byte_size(Caml_ba_array_val(data)));
-  float *arr = Caml_ba_data_val(data);
-  // for(int i = 0; i < 12; i++) {
-  //   printf("%.2f\n", arr[i]);
-  // }
   glBufferData(Int_val(target), caml_ba_byte_size(Caml_ba_array_val(data)), Caml_ba_data_val(data), Int_val(usage));
   CAMLreturn0;
 }
@@ -300,8 +295,19 @@ void TglDrawArrays(value mode, value first, value count) {
   CAMLreturn0;
 }
 
-void TglDrawElements(value mode, value first, value typ, value indices) {
-  CAMLparam4(mode, first, typ, indices);
-  glDrawElements(Int_val(mode), Int_val(first), Int_val(typ), Caml_ba_data_val(indices));
+void TglDrawElements(value mode, value first, value typ, value offset) {
+  CAMLparam4(mode, first, typ, offset);
+  glDrawElements(Int_val(mode), Int_val(first), Int_val(typ), Int_val(offset));
+  CAMLreturn0;
+}
+
+void TglUniformMatrix4fv(value location, value transpose, value val) {
+  CAMLparam3(location, transpose, val);
+  int size = Wosize_val(val);
+  float *arr = malloc(sizeof(float) * size);
+  for (int i = 0; i < size; ++i){
+    arr[i] = Field(val, i);
+  }
+  glUniformMatrix4fv(Int_val(location), 1, Bool_val(transpose), &arr);
   CAMLreturn0;
 }

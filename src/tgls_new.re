@@ -472,9 +472,11 @@ external texImage2D_RGBA : target::int =>
                            data::Bigarray.Array1.t 'a 'b Bigarray.c_layout =>
                            unit = "TglTexImage2D_RGBA_bytecode" "TglTexImage2D_RGBA_native";
 
-external uniform1i : location::int => val::int => unit = "TglUniform1i";
+type uniformT;
 
-external uniform1f : location::int => val::int => unit = "TglUniform1f";
+external uniform1i : location::uniformT => val::int => unit = "TglUniform1i";
+
+external uniform1f : location::uniformT => val::float => unit = "TglUniform1f";
 
 let gl_stream_draw = 35040;
 
@@ -510,8 +512,6 @@ let gl_accum_buffer_bit = 512;
 let gl_stencil_buffer_bit = 1024;
 
 external clear : int => unit = "TglClear";
-
-type uniformT;
 
 external getUniformLocation : program::programT => name::string => uniformT = "TglGetUniformLocation";
 
@@ -605,7 +605,7 @@ external drawArrays : mode::int => first::int => count::int => unit = "TglDrawAr
 external drawElements : mode::int =>
                         count::int =>
                         typ::int =>
-                        indices::Bigarray.Array1.t 'a 'b Bigarray.c_layout =>
+                        offset::int =>
                         unit = "TglDrawElements";
 /*{
     module Sdl = Tsdl_new;
