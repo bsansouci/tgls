@@ -7,5 +7,6 @@
   "static_libraries": [
     "tgls_new.o",
   ],
+  "build_script": "make lib",
   "allowed-build-kinds": ["bytecode", "native"],
 }
