@@ -1,0 +1,11 @@
+{
+  "name": "Tgls",
+  "sources": {
+    "dir": "src",
+    "files": ["tgls_new.re"]
+  },
+  "static_libraries": [
+    "tgls_new.o",
+  ],
+  "allowed-build-kinds": ["bytecode", "native"],
+}
