@@ -439,7 +439,8 @@ external texImage2D_RGBA : target::int =>
                            width::int =>
                            height::int =>
                            border::int =>
-                           array int = "TglTexImage2D_RGBA_bytecode" "TglTexImage2D_RGBA_native";
+                           data::Bigarray.Array1.t 'a 'b Bigarray.c_layout =>
+                           unit = "TglTexImage2D_RGBA_bytecode" "TglTexImage2D_RGBA_native";
 
 external uniform1i : location::int => val::int => unit = "TglUniform1i";
 
@@ -576,174 +577,173 @@ external drawElements : mode::int =>
                         typ::int =>
                         indices::Bigarray.Array1.t 'a 'b Bigarray.c_layout =>
                         unit = "TglDrawElements";
-
 /*{
-  module Sdl = Tsdl_new;
-  let create_window gl::(maj, min) => {
-    let (>>=) = Sdl.(>>=);
-    let w_atts = Sdl.Window.(opengl + resizable);
-    let w_title = Printf.sprintf "OpenGL %d.%d (core profile)" maj min;
-    let set a v => Sdl.Gl.gl_set_attribute a v;
-    set Sdl.Gl.context_profile_mask Sdl.Gl.context_profile_compatibility >>= (
-      fun () =>
-        set Sdl.Gl.context_major_version maj >>= (
-          fun () =>
-            set Sdl.Gl.context_minor_version min >>= (
-              fun () =>
-                set Sdl.Gl.doublebuffer 1 >>= (
-                  fun () =>
-                    Sdl.create_window
-                      title::w_title
-                      x::Sdl.Window.pos_centered
-                      y::Sdl.Window.pos_centered
-                      w::640
-                      h::480
-                      flags::w_atts
-                )
-            )
-        )
-    )
-  };
-  let getProgram ::vertexShaderSource ::fragmentShaderSource :option programT => {
-    let vertexShader = createShader gl_vertex_shader;
-    shaderSource vertexShader [|vertexShaderSource|];
-    compileShader vertexShader;
-    let compiledCorrectly = getShaderiv shader::vertexShader pname::gl_compile_status == 1;
-    if compiledCorrectly {
-      let fragmentShader = createShader gl_fragment_shader;
-      shaderSource fragmentShader [|fragmentShaderSource|];
-      compileShader fragmentShader;
-      let compiledCorrectly = getShaderiv shader::fragmentShader pname::gl_compile_status == 1;
+    module Sdl = Tsdl_new;
+    let create_window gl::(maj, min) => {
+      let (>>=) = Sdl.(>>=);
+      let w_atts = Sdl.Window.(opengl + resizable);
+      let w_title = Printf.sprintf "OpenGL %d.%d (core profile)" maj min;
+      let set a v => Sdl.Gl.gl_set_attribute a v;
+      set Sdl.Gl.context_profile_mask Sdl.Gl.context_profile_compatibility >>= (
+        fun () =>
+          set Sdl.Gl.context_major_version maj >>= (
+            fun () =>
+              set Sdl.Gl.context_minor_version min >>= (
+                fun () =>
+                  set Sdl.Gl.doublebuffer 1 >>= (
+                    fun () =>
+                      Sdl.create_window
+                        title::w_title
+                        x::Sdl.Window.pos_centered
+                        y::Sdl.Window.pos_centered
+                        w::640
+                        h::480
+                        flags::w_atts
+                  )
+              )
+          )
+      )
+    };
+    let getProgram ::vertexShaderSource ::fragmentShaderSource :option programT => {
+      let vertexShader = createShader gl_vertex_shader;
+      shaderSource vertexShader [|vertexShaderSource|];
+      compileShader vertexShader;
+      let compiledCorrectly = getShaderiv shader::vertexShader pname::gl_compile_status == 1;
       if compiledCorrectly {
-        let program = createProgram ();
-        attachShader ::program shader::vertexShader;
-        deleteShader vertexShader;
-        attachShader ::program shader::fragmentShader;
-        deleteShader fragmentShader;
-        linkProgram program;
-        let linkedCorrectly = getProgramiv ::program pname::gl_link_status == 1;
-        if linkedCorrectly {
-          Some program
+        let fragmentShader = createShader gl_fragment_shader;
+        shaderSource fragmentShader [|fragmentShaderSource|];
+        compileShader fragmentShader;
+        let compiledCorrectly = getShaderiv shader::fragmentShader pname::gl_compile_status == 1;
+        if compiledCorrectly {
+          let program = createProgram ();
+          attachShader ::program shader::vertexShader;
+          deleteShader vertexShader;
+          attachShader ::program shader::fragmentShader;
+          deleteShader fragmentShader;
+          linkProgram program;
+          let linkedCorrectly = getProgramiv ::program pname::gl_link_status == 1;
+          if linkedCorrectly {
+            Some program
+          } else {
+            print_endline @@ "Linking error: " ^ getProgramInfoLog ::program;
+            None
+          }
         } else {
-          print_endline @@ "Linking error: " ^ getProgramInfoLog ::program;
+          print_endline @@ "Fragment shader error: " ^ getShaderInfoLog shader::fragmentShader;
           None
         }
       } else {
-        print_endline @@ "Fragment shader error: " ^ getShaderInfoLog shader::fragmentShader;
+        print_endline @@ "Vertex shader error: " ^ getShaderInfoLog shader::vertexShader;
         None
       }
-    } else {
-      print_endline @@ "Vertex shader error: " ^ getShaderInfoLog shader::vertexShader;
-      None
-    }
-  };
-  let e = Sdl.Init.init Sdl.Init.everything;
-  assert (e == 0);
-  let w = create_window gl::(2, 1);
-  let gl = Sdl.gl_create_context w;
-  let e = Sdl.gl_make_current w gl;
-  assert (e == 0);
-  viewport x::(-1) y::(-1) width::640 height::480;
-  clearColor red::0. green::0. blue::1. alpha::1.;
-  enable gl_blend;
-  blendFunc gl_src_alpha gl_one_minus_src_alpha;
-  let vertexShaderSource = {|
-      attribute vec4 aVertexPosition;
-      attribute vec4 aColor;
+    };
+    let e = Sdl.Init.init Sdl.Init.everything;
+    assert (e == 0);
+    let w = create_window gl::(2, 1);
+    let gl = Sdl.gl_create_context w;
+    let e = Sdl.gl_make_current w gl;
+    assert (e == 0);
+    viewport x::(-1) y::(-1) width::640 height::480;
+    clearColor red::0. green::0. blue::1. alpha::1.;
+    enable gl_blend;
+    blendFunc gl_src_alpha gl_one_minus_src_alpha;
+    let vertexShaderSource = {|
+        attribute vec4 aVertexPosition;
+        attribute vec4 aColor;
 
-      varying vec4 v_v4FillColor;
+        varying vec4 v_v4FillColor;
 
-      void main() {
-        v_v4FillColor = aColor;
-        gl_Position = aVertexPosition;
-      }
-    |};
-  let fragmentShaderSource = {|
-      varying vec4 v_v4FillColor;
-
-      void main() {
-        gl_FragColor = v_v4FillColor;
-      }
-    |};
-  switch (getProgram ::vertexShaderSource ::fragmentShaderSource) {
-  | None => failwith "what the heck"
-  | Some program =>
-    let positionAttrib = getAttribLocation ::program name::"aVertexPosition";
-    enableVertexAttribArray positionAttrib;
-    let colorAttrib = getAttribLocation ::program name::"aColor";
-    enableVertexAttribArray colorAttrib;
-    let bothBuffers = genBuffers 2;
-    let vertexBuffer = bothBuffers.(0);
-    let vertexData = Bigarray.Array1.create Bigarray.Float32 Bigarray.c_layout 12;
-    vertexData.{0} = 0.0;
-    vertexData.{1} = 0.5;
-    vertexData.{2} = 0.0;
-    vertexData.{3} = 1.0;
-    vertexData.{4} = (-0.5);
-    vertexData.{5} = (-0.5);
-    vertexData.{6} = 0.0;
-    vertexData.{7} = 1.0;
-    vertexData.{8} = 0.5;
-    vertexData.{9} = (-0.5);
-    vertexData.{10} = 0.0;
-    vertexData.{11} = 1.0;
-    /*bindBuffer target::gl_array_buffer buffer::vertexBuffer;
-      bufferData target::gl_array_buffer data::vertexData usage::gl_static_draw;*/
-    let colorData = Bigarray.Array1.create Bigarray.Float32 Bigarray.c_layout 12;
-    colorData.{0} = 1.0;
-    colorData.{1} = 0.0;
-    colorData.{2} = 0.0;
-    colorData.{3} = 1.0;
-    colorData.{4} = 0.0;
-    colorData.{5} = 1.0;
-    colorData.{6} = 0.0;
-    colorData.{7} = 1.0;
-    colorData.{8} = 0.0;
-    colorData.{9} = 1.0;
-    colorData.{10} = 0.0;
-    colorData.{11} = 1.0;
-    let colorBuffer = bothBuffers.(1);
-    /*bindBuffer target::gl_array_buffer buffer::colorBuffer;
-      bufferData target::gl_array_buffer data::colorData usage::gl_static_draw;*/
-    print_endline "test";
-    let shouldRun = ref true;
-
-    /** main loop */
-    while !shouldRun {
-      switch (Sdl.Event.poll_event ()) {
-      | None => ()
-      | Some e =>
-        if (Sdl.Event.typ e == Sdl.Event.keydown) {
-          if (Sdl.Event.keyboard_keycode e == 27) {
-            print_endline "pressed escape!";
-            shouldRun := false
-          }
+        void main() {
+          v_v4FillColor = aColor;
+          gl_Position = aVertexPosition;
         }
-      };
+      |};
+    let fragmentShaderSource = {|
+        varying vec4 v_v4FillColor;
 
-      /** main draw calls */
-      clear (gl_color_buffer_bit + gl_depth_buffer_bit);
-      useProgram program;
+        void main() {
+          gl_FragColor = v_v4FillColor;
+        }
+      |};
+    switch (getProgram ::vertexShaderSource ::fragmentShaderSource) {
+    | None => failwith "what the heck"
+    | Some program =>
+      let positionAttrib = getAttribLocation ::program name::"aVertexPosition";
+      enableVertexAttribArray positionAttrib;
+      let colorAttrib = getAttribLocation ::program name::"aColor";
+      enableVertexAttribArray colorAttrib;
+      let bothBuffers = genBuffers 2;
+      let vertexBuffer = bothBuffers.(0);
+      let vertexData = Bigarray.Array1.create Bigarray.Float32 Bigarray.c_layout 12;
+      vertexData.{0} = 0.0;
+      vertexData.{1} = 0.5;
+      vertexData.{2} = 0.0;
+      vertexData.{3} = 1.0;
+      vertexData.{4} = (-0.5);
+      vertexData.{5} = (-0.5);
+      vertexData.{6} = 0.0;
+      vertexData.{7} = 1.0;
+      vertexData.{8} = 0.5;
+      vertexData.{9} = (-0.5);
+      vertexData.{10} = 0.0;
+      vertexData.{11} = 1.0;
+      /*bindBuffer target::gl_array_buffer buffer::vertexBuffer;
+        bufferData target::gl_array_buffer data::vertexData usage::gl_static_draw;*/
+      let colorData = Bigarray.Array1.create Bigarray.Float32 Bigarray.c_layout 12;
+      colorData.{0} = 1.0;
+      colorData.{1} = 0.0;
+      colorData.{2} = 0.0;
+      colorData.{3} = 1.0;
+      colorData.{4} = 0.0;
+      colorData.{5} = 1.0;
+      colorData.{6} = 0.0;
+      colorData.{7} = 1.0;
+      colorData.{8} = 0.0;
+      colorData.{9} = 1.0;
+      colorData.{10} = 0.0;
+      colorData.{11} = 1.0;
+      let colorBuffer = bothBuffers.(1);
+      /*bindBuffer target::gl_array_buffer buffer::colorBuffer;
+        bufferData target::gl_array_buffer data::colorData usage::gl_static_draw;*/
+      print_endline "test";
+      let shouldRun = ref true;
 
-      /** vertices */
-      bindBuffer target::gl_array_buffer buffer::vertexBuffer;
-      bufferData target::gl_array_buffer data::vertexData usage::gl_stream_draw;
-      vertexAttribPointer
-        index::positionAttrib size::4 typ::gl_float normalized::false stride::0 offset::0;
+      /** main loop */
+      while !shouldRun {
+        switch (Sdl.Event.poll_event ()) {
+        | None => ()
+        | Some e =>
+          if (Sdl.Event.typ e == Sdl.Event.keydown) {
+            if (Sdl.Event.keyboard_keycode e == 27) {
+              print_endline "pressed escape!";
+              shouldRun := false
+            }
+          }
+        };
 
-      /** colors */
-      bindBuffer target::gl_array_buffer buffer::colorBuffer;
-      bufferData target::gl_array_buffer data::colorData usage::gl_static_draw;
-      vertexAttribPointer
-        index::colorAttrib size::4 typ::gl_float normalized::false stride::0 offset::0;
-      drawArrays mode::gl_triangles first::0 count::3;
-      Sdl.gl_swap_window w
-    }
+        /** main draw calls */
+        clear (gl_color_buffer_bit + gl_depth_buffer_bit);
+        useProgram program;
+
+        /** vertices */
+        bindBuffer target::gl_array_buffer buffer::vertexBuffer;
+        bufferData target::gl_array_buffer data::vertexData usage::gl_stream_draw;
+        vertexAttribPointer
+          index::positionAttrib size::4 typ::gl_float normalized::false stride::0 offset::0;
+
+        /** colors */
+        bindBuffer target::gl_array_buffer buffer::colorBuffer;
+        bufferData target::gl_array_buffer data::colorData usage::gl_static_draw;
+        vertexAttribPointer
+          index::colorAttrib size::4 typ::gl_float normalized::false stride::0 offset::0;
+        drawArrays mode::gl_triangles first::0 count::3;
+        Sdl.gl_swap_window w
+      }
+    };
+    Sdl.destroy_window w;
+    /*};*/
+    /*)*/
+    /*);*/
+    Sdl.quit ()
   };
-  Sdl.destroy_window w;
-  /*};*/
-  /*)*/
-  /*);*/
-  Sdl.quit ()
-};
-*/
+  */

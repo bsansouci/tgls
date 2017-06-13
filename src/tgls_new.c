@@ -166,24 +166,15 @@ CAMLprim value TglReadPixels_RGBA(value x, value y, value width, value height) {
   CAMLreturn(ret);
 }
 
-CAMLprim value TglTexImage2D_RGBA_native(value target, value level, value internalFormat, value width, value height, value border) {
-  CAMLparam5(target, level, internalFormat, width, height);
-  CAMLxparam1(border);
-  CAMLlocal1(ret);
-
-  int size = (Int_val(width) + Int_val(border)) * (Int_val(height) + Int_val(border)) * 4;
-  char *data = malloc(size * sizeof(char));
-  glTexImage2D(Int_val(target), Int_val(level), Int_val(internalFormat), Int_val(width), Int_val(height), Int_val(border), GL_RGBA, GL_UNSIGNED_BYTE, data);
-
-  ret = caml_alloc_small(size, 0);
-  for (int i = 0; i < size; ++i) {
-    Field(ret, 0) = data[i];
-  }
-  CAMLreturn(ret);
+void TglTexImage2D_RGBA_native(value target, value level, value width, value height, value border, value data) {
+  CAMLparam5(target, level, width, height, border);
+  CAMLxparam1(data);
+  glTexImage2D(Int_val(target), Int_val(level), 4, Int_val(width), Int_val(height), Int_val(border), GL_RGBA, GL_UNSIGNED_BYTE, Caml_ba_data_val(data));
+  CAMLreturn0;
 }
 
-CAMLprim value TglTexImage2D_RGBA_bytecode(value * argv, int argn) {
-  return TglTexImage2D_RGBA_native(argv[0], argv[1], argv[2], argv[3], argv[4], argv[5]);
+void TglTexImage2D_RGBA_bytecode(value * argv, int argn) {
+  TglTexImage2D_RGBA_native(argv[0], argv[1], argv[2], argv[3], argv[4], argv[5]);
 }
 
 void TglUniform1i(value location, value v) {
