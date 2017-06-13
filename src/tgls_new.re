@@ -607,6 +607,8 @@ external drawElements : mode::int =>
                         typ::int =>
                         offset::int =>
                         unit = "TglDrawElements";
+
+external uniformMatrix4fv : location::int => transpose::bool => value::array float => unit = "TglUniformMatrix4fv";
 /*{
     module Sdl = Tsdl_new;
     let create_window gl::(maj, min) => {
