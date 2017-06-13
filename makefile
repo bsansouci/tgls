@@ -1,7 +1,10 @@
-lib:
+lib: tgls_new.o
+
+tgls_new.o:
 	ocamlopt.opt -c src/tgls_new.c
-	# ocamlopt.opt -ccopt -L  -ccopt /opt/X11/lib -ccopt -lGLESv2 bigarray.cmxa tgls_new.o src/tgls_new.cmx
-	# ocamlopt.opt -ccopt -L  -ccopt /System/Library/Frameworks/OpenGL.framework/Libraries -ccopt -lGL -ccopt -L -ccopt ~/Desktop/reprocessing/node_modules/sdl2/ -ccopt -lSDL2 bigarray.cmxa ~/Desktop/tsdl/tsdl_new.o ~/Desktop/tsdl/src/tsdl_new.cmx tgls_new.o src/tgls_new.cmx
+
+# ocamlopt.opt -ccopt -L  -ccopt /opt/X11/lib -ccopt -lGLESv2 bigarray.cmxa tgls_new.o src/tgls_new.cmx
+# ocamlopt.opt -ccopt -L  -ccopt /System/Library/Frameworks/OpenGL.framework/Libraries -ccopt -lGL -ccopt -L -ccopt ~/Desktop/reprocessing/node_modules/sdl2/ -ccopt -lSDL2 bigarray.cmxa ~/Desktop/tsdl/tsdl_new.o ~/Desktop/tsdl/src/tsdl_new.cmx tgls_new.o src/tgls_new.cmx
 
 # all:
 # 	ocamlc.opt -c src/tgls_new.c

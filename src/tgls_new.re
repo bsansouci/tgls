@@ -340,7 +340,7 @@ let gl_one_minus_constant_alpha = 32772;
 
 external blendFunc : sfactor::int => dfactor::int => unit = "TglBlendFunc";
 
-external readPixels_RGBA : x::int => y::int => width::int => height::int => array int = "TglReadPixels_RGBA";
+external readPixels_RGBA : x::int => y::int => width::int => height::int => Bigarray.Array1.t int Bigarray.int8_unsigned_elt Bigarray.c_layout = "TglReadPixels_RGBA";
 
 let gl_proxy_texture_2d = 32868;
 
@@ -608,7 +608,7 @@ external drawElements : mode::int =>
                         offset::int =>
                         unit = "TglDrawElements";
 
-external uniformMatrix4fv : location::int => transpose::bool => value::array float => unit = "TglUniformMatrix4fv";
+external uniformMatrix4fv : location::uniformT => transpose::bool => value::array float => unit = "TglUniformMatrix4fv";
 /*{
     module Sdl = Tsdl_new;
     let create_window gl::(maj, min) => {
