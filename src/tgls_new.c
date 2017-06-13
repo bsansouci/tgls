@@ -22,9 +22,7 @@ CAMLprim value TglCreateProgram() {
 
 CAMLprim value TglCreateShader(value shaderType) {
   CAMLparam1(shaderType);
-  GLuint i = glCreateShader(Int_val(shaderType));
-  printf("shader id %d\n", i);
-  CAMLreturn(Val_int(i));
+  CAMLreturn(Val_int(glCreateShader(Int_val(shaderType))));
 }
 
 void TglAttachShader(value program, value shader) {
@@ -86,6 +84,13 @@ CAMLprim value TglGenBuffers(value count) {
   CAMLreturn(ret);
 }
 
+CAMLprim value TglGenBuffer() {
+  CAMLparam0();
+  unsigned int buffers = 0;
+  glGenBuffers(1, &buffers);
+  CAMLreturn(Val_int(buffers));
+}
+
 void TglClearColor(value r, value g, value b, value a) {
   CAMLparam4(r, g, b, a);
   glClearColor(Double_val(r), Double_val(g), Double_val(b), Double_val(a));
@@ -112,6 +117,13 @@ CAMLprim value TglGenTextures(value count) {
   }
 
   CAMLreturn(ret);
+}
+
+CAMLprim value TglGenTexture() {
+  CAMLparam0();
+  unsigned int textures = 0;
+  glGenTextures(1, &textures);
+  CAMLreturn(Val_int(textures));
 }
 
 void TglActiveTexture(value textureUnit) {
@@ -154,14 +166,16 @@ CAMLprim value TglReadPixels_RGBA(value x, value y, value width, value height) {
   CAMLparam4(x, y, width, height);
   CAMLlocal1(ret);
 
-  int size = Int_val(width) * Int_val(height) * 4;
-  char *data = malloc(size * sizeof(char));
+  // Allocate a pointer for caml_ba_alloc's sake.
+  intnat *size = malloc(sizeof(intnat));
+  *size = Int_val(width) * Int_val(height) * 4;
+
+  char *data = malloc(*size * sizeof(char));
+
   glReadPixels(Int_val(x), Int_val(y), Int_val(width), Int_val(height), GL_RGBA, GL_UNSIGNED_BYTE, data);
 
-  ret = caml_alloc_small(size, 0);
-  for (int i = 0; i < size; ++i) {
-    Field(ret, 0) = data[i];
-  }
+  // return array of size `size` of dimension 1 of uint8 (char).
+  ret = caml_ba_alloc(CAML_BA_UINT8, 1, data, size);
   CAMLreturn(ret);
 }
 
@@ -225,7 +239,8 @@ void TglEnableVertexAttribArray(value attrib) {
 void TglVertexAttribPointer_native(value index, value size, value typ, value normalized, value stride, value offset) {
   CAMLparam5(index, size, typ, normalized, stride);
   CAMLxparam1(offset);
-  glVertexAttribPointer(Int_val(index), Int_val(size), Int_val(typ), Bool_val(normalized), Int_val(stride), Int_val(offset));
+  long o = (long)Int_val(offset);
+  glVertexAttribPointer(Int_val(index), Int_val(size), Int_val(typ), Bool_val(normalized), Int_val(stride), (const GLvoid *)o);
   CAMLreturn0;
 }
 
@@ -244,7 +259,6 @@ CAMLprim value TglGetShaderiv(value shader, value pname) {
   CAMLparam2(shader, pname);
   GLint ret;
   glGetShaderiv(Int_val(shader), Int_val(pname), &ret);
-  printf("for shader %d we got %d for pname %d\n", Int_val(shader), ret, Int_val(pname));
   CAMLreturn(Val_int(ret));
 }
 
@@ -254,10 +268,8 @@ CAMLprim value TglGetShaderInfoLog(value shader) {
 
   GLint exactLength;
   glGetShaderiv(Int_val(shader), GL_INFO_LOG_LENGTH, &exactLength);
-  printf("for shader %d length of logs %d\n", Int_val(shader), exactLength);
   GLchar *buffer = malloc(exactLength * sizeof(char));
   glGetShaderInfoLog(Int_val(shader), exactLength - 1, NULL, buffer);
-  printf("for shader %d logs: %s\n", Int_val(shader), buffer);
 
   ret = caml_copy_string(buffer);
   CAMLreturn(ret);
@@ -297,17 +309,18 @@ void TglDrawArrays(value mode, value first, value count) {
 
 void TglDrawElements(value mode, value first, value typ, value offset) {
   CAMLparam4(mode, first, typ, offset);
-  glDrawElements(Int_val(mode), Int_val(first), Int_val(typ), Int_val(offset));
+  long o = (long)Int_val(offset);
+  glDrawElements(Int_val(mode), Int_val(first), Int_val(typ), (const GLvoid *)o);
   CAMLreturn0;
 }
 
 void TglUniformMatrix4fv(value location, value transpose, value val) {
   CAMLparam3(location, transpose, val);
   int size = Wosize_val(val);
-  float *arr = malloc(sizeof(float) * size);
+  float *matrix = malloc(sizeof(float) * size);
   for (int i = 0; i < size; ++i){
-    arr[i] = Field(val, i);
+    matrix[i] = Double_field(val, i);
   }
-  glUniformMatrix4fv(Int_val(location), 1, Bool_val(transpose), &arr);
+  glUniformMatrix4fv(Int_val(location), 1, Bool_val(transpose), matrix);
   CAMLreturn0;
 }

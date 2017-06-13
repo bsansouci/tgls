@@ -37,12 +37,16 @@ external bindBuffer : target::int => buffer::bufferT => unit = "TglBindBuffer";
 /* might not work because passing stack pointer instead of heap pointer (see warning) */
 external genBuffers : int => array bufferT = "TglGenBuffers";
 
+external genBuffer : unit => bufferT = "TglGenBuffer";
+
 external clearColor : red::float => green::float => blue::float => alpha::float => unit = "TglClearColor";
 
 type textureT;
 
 /* might not work because passing stack pointer instead of heap pointer (see warning) */
 external genTextures : int => array textureT = "TglGenTextures";
+
+external genTexture : unit => textureT = "TglGenTexture";
 
 let gl_texture0 = 33984;
 
@@ -340,7 +344,11 @@ let gl_one_minus_constant_alpha = 32772;
 
 external blendFunc : sfactor::int => dfactor::int => unit = "TglBlendFunc";
 
-external readPixels_RGBA : x::int => y::int => width::int => height::int => Bigarray.Array1.t int Bigarray.int8_unsigned_elt Bigarray.c_layout = "TglReadPixels_RGBA";
+external readPixels_RGBA : x::int =>
+                           y::int =>
+                           width::int =>
+                           height::int =>
+                           Bigarray.Array1.t int Bigarray.int8_unsigned_elt Bigarray.c_layout = "TglReadPixels_RGBA";
 
 let gl_proxy_texture_2d = 32868;
 
@@ -602,11 +610,7 @@ let gl_polygon = 9;
 
 external drawArrays : mode::int => first::int => count::int => unit = "TglDrawArrays";
 
-external drawElements : mode::int =>
-                        count::int =>
-                        typ::int =>
-                        offset::int =>
-                        unit = "TglDrawElements";
+external drawElements : mode::int => count::int => typ::int => offset::int => unit = "TglDrawElements";
 
 external uniformMatrix4fv : location::uniformT => transpose::bool => value::array float => unit = "TglUniformMatrix4fv";
 /*{
