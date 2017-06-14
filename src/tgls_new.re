@@ -582,11 +582,11 @@ external getProgramiv : program::programT => pname::int => int = "TglGetProgrami
 
 external getShaderiv : shader::shaderT => pname::int => int = "TglGetShaderiv";
 
-external getShaderInfoLog : shader::shaderT => string = "TglGetShaderInfoLog";
+external getShaderInfoLog : shaderT => string = "TglGetShaderInfoLog";
 
-external getProgramInfoLog : program::programT => string = "TglGetProgramInfoLog";
+external getProgramInfoLog : programT => string = "TglGetProgramInfoLog";
 
-external getShaderSource : shader::shaderT => string = "TglGetShaderSource";
+external getShaderSource : shaderT => string = "TglGetShaderSource";
 
 let gl_points = 0;
 
