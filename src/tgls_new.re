@@ -548,7 +548,7 @@ let gl_double = 5130;
 external vertexAttribPointer : index::attribT =>
                                size::int =>
                                typ::int =>
-                               normalized::bool =>
+                               normalize::bool =>
                                stride::int =>
                                offset::int =>
                                unit = "TglVertexAttribPointer_bytecode"
@@ -765,13 +765,13 @@ external uniformMatrix4fv : location::uniformT => transpose::bool => value::arra
         bindBuffer target::gl_array_buffer buffer::vertexBuffer;
         bufferData target::gl_array_buffer data::vertexData usage::gl_stream_draw;
         vertexAttribPointer
-          index::positionAttrib size::4 typ::gl_float normalized::false stride::0 offset::0;
+          index::positionAttrib size::4 typ::gl_float normalize::false stride::0 offset::0;
 
         /** colors */
         bindBuffer target::gl_array_buffer buffer::colorBuffer;
         bufferData target::gl_array_buffer data::colorData usage::gl_static_draw;
         vertexAttribPointer
-          index::colorAttrib size::4 typ::gl_float normalized::false stride::0 offset::0;
+          index::colorAttrib size::4 typ::gl_float normalize::false stride::0 offset::0;
         drawArrays mode::gl_triangles first::0 count::3;
         Sdl.gl_swap_window w
       }

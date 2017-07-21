@@ -236,11 +236,11 @@ void TglEnableVertexAttribArray(value attrib) {
   CAMLreturn0;
 }
 
-void TglVertexAttribPointer_native(value index, value size, value typ, value normalized, value stride, value offset) {
-  CAMLparam5(index, size, typ, normalized, stride);
+void TglVertexAttribPointer_native(value index, value size, value typ, value normalize, value stride, value offset) {
+  CAMLparam5(index, size, typ, normalize, stride);
   CAMLxparam1(offset);
   long o = (long)Int_val(offset);
-  glVertexAttribPointer(Int_val(index), Int_val(size), Int_val(typ), Bool_val(normalized), Int_val(stride), (const GLvoid *)o);
+  glVertexAttribPointer(Int_val(index), Int_val(size), Int_val(typ), Bool_val(normalize), Int_val(stride), (const GLvoid *)o);
   CAMLreturn0;
 }
 
