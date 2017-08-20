@@ -138,6 +138,19 @@ void TglBindTexture(value kind, value texture) {
   CAMLreturn0;
 }
 
+void TglTexSubImage2D_native(value target, value level, value xoffset, value yoffset, value width, value height, value format, value type, value pixels) {
+  CAMLparam5(target, level, xoffset, yoffset, width);
+  CAMLxparam4(height, format, type, pixels);
+  
+  glTexSubImage2D(Int_val(target), Int_val(level), Int_val(xoffset), Int_val(yoffset), Int_val(width), Int_val(height), Int_val(format), Int_val(type), Caml_ba_data_val(pixels));
+  CAMLreturn0;
+}
+
+void TglTexSubImage2D_bytecode(value * argv, int argn) {
+  TglTexSubImage2D_native(argv[0], argv[1], argv[2], argv[3], argv[4], argv[5], argv[6], argv[7], argv[8]);
+}
+
+
 void TglTexParameteri(value kind, value pname, value param) {
   CAMLparam3(kind, pname, param);
   glTexParameteri(Int_val(kind), Int_val(pname), Int_val(param));

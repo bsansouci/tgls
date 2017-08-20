@@ -39,7 +39,8 @@ external genBuffers : int => array bufferT = "TglGenBuffers";
 
 external genBuffer : unit => bufferT = "TglGenBuffer";
 
-external clearColor : red::float => green::float => blue::float => alpha::float => unit = "TglClearColor";
+external clearColor : red::float => green::float => blue::float => alpha::float => unit =
+  "TglClearColor";
 
 type textureT;
 
@@ -123,6 +124,19 @@ let gl_texture_3d = 32879;
 let gl_texture_cube_map = 34067;
 
 external bindTexture : target::int => texture::textureT => unit = "TglBindTexture";
+
+external texSubImage2D :
+  target::int =>
+  level::int =>
+  xoffset::int =>
+  yoffset::int =>
+  width::int =>
+  height::int =>
+  format::int =>
+  type_::int =>
+  pixels::Bigarray.Array1.t 'a 'b Bigarray.c_layout =>
+  unit =
+  "TglTexSubImage2D_bytecode" "TglTexSubImage2D_native";
 
 let gl_texture_mag_filter = 10240;
 
@@ -344,11 +358,13 @@ let gl_one_minus_constant_alpha = 32772;
 
 external blendFunc : sfactor::int => dfactor::int => unit = "TglBlendFunc";
 
-external readPixels_RGBA : x::int =>
-                           y::int =>
-                           width::int =>
-                           height::int =>
-                           Bigarray.Array1.t int Bigarray.int8_unsigned_elt Bigarray.c_layout = "TglReadPixels_RGBA";
+external readPixels_RGBA :
+  x::int =>
+  y::int =>
+  width::int =>
+  height::int =>
+  Bigarray.Array1.t int Bigarray.int8_unsigned_elt Bigarray.c_layout =
+  "TglReadPixels_RGBA";
 
 let gl_proxy_texture_2d = 32868;
 
@@ -472,13 +488,15 @@ let gl_srgb_alpha = 35906;
 
 let gl_srgb8_alpha8 = 35907;
 
-external texImage2D_RGBA : target::int =>
-                           level::int =>
-                           width::int =>
-                           height::int =>
-                           border::int =>
-                           data::Bigarray.Array1.t 'a 'b Bigarray.c_layout =>
-                           unit = "TglTexImage2D_RGBA_bytecode" "TglTexImage2D_RGBA_native";
+external texImage2D_RGBA :
+  target::int =>
+  level::int =>
+  width::int =>
+  height::int =>
+  border::int =>
+  data::Bigarray.Array1.t 'a 'b Bigarray.c_layout =>
+  unit =
+  "TglTexImage2D_RGBA_bytecode" "TglTexImage2D_RGBA_native";
 
 type uniformT;
 
@@ -504,10 +522,9 @@ let gl_dynamic_read = 35049;
 
 let gl_dynamic_copy = 35050;
 
-external bufferData : target::int =>
-                      data::Bigarray.Array1.t 'a 'b Bigarray.c_layout =>
-                      usage::int =>
-                      unit = "TglBufferData";
+external bufferData :
+  target::int => data::Bigarray.Array1.t 'a 'b Bigarray.c_layout => usage::int => unit =
+  "TglBufferData";
 
 external viewport : x::int => y::int => width::int => height::int => unit = "TglViewport";
 
@@ -521,7 +538,8 @@ let gl_stencil_buffer_bit = 1024;
 
 external clear : int => unit = "TglClear";
 
-external getUniformLocation : program::programT => name::string => uniformT = "TglGetUniformLocation";
+external getUniformLocation : program::programT => name::string => uniformT =
+  "TglGetUniformLocation";
 
 type attribT;
 
@@ -545,14 +563,9 @@ let gl_float = 5126;
 
 let gl_double = 5130;
 
-external vertexAttribPointer : index::attribT =>
-                               size::int =>
-                               typ::int =>
-                               normalize::bool =>
-                               stride::int =>
-                               offset::int =>
-                               unit = "TglVertexAttribPointer_bytecode"
-                                      "TglVertexAttribPointer_native";
+external vertexAttribPointer :
+  index::attribT => size::int => typ::int => normalize::bool => stride::int => offset::int => unit =
+  "TglVertexAttribPointer_bytecode" "TglVertexAttribPointer_native";
 
 let gl_shader_type = 35663;
 
@@ -610,9 +623,11 @@ let gl_polygon = 9;
 
 external drawArrays : mode::int => first::int => count::int => unit = "TglDrawArrays";
 
-external drawElements : mode::int => count::int => typ::int => offset::int => unit = "TglDrawElements";
+external drawElements : mode::int => count::int => typ::int => offset::int => unit =
+  "TglDrawElements";
 
-external uniformMatrix4fv : location::uniformT => transpose::bool => value::array float => unit = "TglUniformMatrix4fv";
+external uniformMatrix4fv : location::uniformT => transpose::bool => value::array float => unit =
+  "TglUniformMatrix4fv";
 /*{
     module Sdl = Tsdl_new;
     let create_window gl::(maj, min) => {
