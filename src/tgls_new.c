@@ -7,39 +7,28 @@
 #include <caml/fail.h>
 #include <caml/bigarray.h>
 
-#include <OpenGL/Gl.h>
-
-// CAMLprim value TglClearColor(value r, value g, value b, value a) {
-//   CAMLparam4(r, g, b, a);
-//   glClearColor();
-//   CAMLreturn0;
-// }
+#include <OpenGL/Gl3.h>
 
 CAMLprim value TglCreateProgram() {
-  CAMLparam0();
-  CAMLreturn(Val_int(glCreateProgram()));
+  return (Val_int(glCreateProgram()));
 }
 
 CAMLprim value TglCreateShader(value shaderType) {
-  CAMLparam1(shaderType);
-  CAMLreturn(Val_int(glCreateShader(Int_val(shaderType))));
+  return (Val_int(glCreateShader(Int_val(shaderType))));
 }
 
 void TglAttachShader(value program, value shader) {
-  CAMLparam2(program, shader);
   glAttachShader(Int_val(program), Int_val(shader));
-  CAMLreturn0;
 }
 
 void TglDeleteShader(value shader) {
-  CAMLparam1(shader);
   glDeleteShader(Int_val(shader));
-  CAMLreturn0;
 }
 
 void TglShaderSource(value shader, value stringArray) {
   CAMLparam2(shader, stringArray);
   int numOfElements = Wosize_val(stringArray);
+  // @MemoryLeak
   const GLchar **arrOfElements = malloc(sizeof(GLchar *) * numOfElements);
   GLint *arrOfLengths = malloc(sizeof(GLint) * numOfElements);
   for(int i = 0; i < numOfElements; ++i) {
@@ -52,21 +41,15 @@ void TglShaderSource(value shader, value stringArray) {
 }
 
 void TglCompileShader(value shader) {
-  CAMLparam1(shader);
   glCompileShader(Int_val(shader));
-  CAMLreturn0;
 }
 
 void TglLinkProgram(value program) {
-  CAMLparam1(program);
   glLinkProgram(Int_val(program));
-  CAMLreturn0;
 }
 
 void TglUseProgram(value program) {
-  CAMLparam1(program);
   glUseProgram(Int_val(program));
-  CAMLreturn0;
 }
 
 CAMLprim value TglGenBuffers(value count) {
@@ -74,6 +57,7 @@ CAMLprim value TglGenBuffers(value count) {
   CAMLlocal1(ret);
 
   int size = Int_val(count);
+  // @Speed
   unsigned int *buffers = malloc(sizeof(unsigned int) * size);
   glGenBuffers(size, buffers);
 
@@ -84,23 +68,18 @@ CAMLprim value TglGenBuffers(value count) {
   CAMLreturn(ret);
 }
 
-CAMLprim value TglGenBuffer() {
-  CAMLparam0();
+value TglGenBuffer() {
   unsigned int buffers = 0;
   glGenBuffers(1, &buffers);
-  CAMLreturn(Val_int(buffers));
+  return (Val_int(buffers));
 }
 
 void TglClearColor(value r, value g, value b, value a) {
-  CAMLparam4(r, g, b, a);
   glClearColor(Double_val(r), Double_val(g), Double_val(b), Double_val(a));
-  CAMLreturn0;
 }
 
 void TglBindBuffer(value kind, value buffer) {
-  CAMLparam2(kind, buffer);
   glBindBuffer(Int_val(kind), Int_val(buffer));
-  CAMLreturn0;
 }
 
 CAMLprim value TglGenTextures(value count) {
@@ -108,7 +87,7 @@ CAMLprim value TglGenTextures(value count) {
   CAMLlocal1(ret);
 
   int size = Int_val(count);
-  unsigned int *textures = malloc(sizeof(unsigned int) * size);
+  unsigned int textures[size];
   glGenTextures(size, textures);
 
   ret = caml_alloc_small(size, 0);
@@ -119,23 +98,18 @@ CAMLprim value TglGenTextures(value count) {
   CAMLreturn(ret);
 }
 
-CAMLprim value TglGenTexture() {
-  CAMLparam0();
+value TglGenTexture() {
   unsigned int textures = 0;
   glGenTextures(1, &textures);
-  CAMLreturn(Val_int(textures));
+  return (Val_int(textures));
 }
 
 void TglActiveTexture(value textureUnit) {
-  CAMLparam1(textureUnit);
   glActiveTexture(Int_val(textureUnit));
-  CAMLreturn0;
 }
 
 void TglBindTexture(value kind, value texture) {
-  CAMLparam2(kind, texture);
   glBindTexture(Int_val(kind), Int_val(texture));
-  CAMLreturn0;
 }
 
 void TglTexSubImage2D_native(value target, value level, value xoffset, value yoffset, value width, value height, value format, value type, value pixels) {
@@ -152,27 +126,19 @@ void TglTexSubImage2D_bytecode(value * argv, int argn) {
 
 
 void TglTexParameteri(value kind, value pname, value param) {
-  CAMLparam3(kind, pname, param);
   glTexParameteri(Int_val(kind), Int_val(pname), Int_val(param));
-  CAMLreturn0;
 }
 
 void TglEnable(value thing) {
-  CAMLparam1(thing);
   glEnable(Int_val(thing));
-  CAMLreturn0;
 }
 
 void TglDisable(value thing) {
-  CAMLparam1(thing);
   glDisable(Int_val(thing));
-  CAMLreturn0;
 }
 
 void TglBlendFunc(value sfactor, value dfactor) {
-  CAMLparam2(sfactor, dfactor);
   glBlendFunc(Int_val(sfactor), Int_val(dfactor));
-  CAMLreturn0;
 }
 
 CAMLprim value TglReadPixels_RGBA(value x, value y, value width, value height) {
@@ -193,10 +159,7 @@ CAMLprim value TglReadPixels_RGBA(value x, value y, value width, value height) {
 }
 
 void TglTexImage2D_RGBA_native(value target, value level, value width, value height, value border, value data) {
-  CAMLparam5(target, level, width, height, border);
-  CAMLxparam1(data);
   glTexImage2D(Int_val(target), Int_val(level), 4, Int_val(width), Int_val(height), Int_val(border), GL_RGBA, GL_UNSIGNED_BYTE, Caml_ba_data_val(data));
-  CAMLreturn0;
 }
 
 void TglTexImage2D_RGBA_bytecode(value * argv, int argn) {
@@ -204,49 +167,48 @@ void TglTexImage2D_RGBA_bytecode(value * argv, int argn) {
 }
 
 void TglUniform1i(value location, value v) {
-  CAMLparam2(location, v);
   glUniform1i(Int_val(location), Int_val(v));
-  CAMLreturn0;
 }
 
 void TglUniform1f(value location, value v) {
-  CAMLparam2(location, v);
   glUniform1f(Int_val(location), Double_val(v));
-  CAMLreturn0;
 }
 
+void TglUniform2f(value location, value v1, value v2) {
+  glUniform2f(Int_val(location), Double_val(v1), Double_val(v2));
+}
+
+void TglUniform3f(value location, value v1, value v2, value v3) {
+  glUniform3f(Int_val(location), Double_val(v1), Double_val(v2), Double_val(v3));
+}
+
+void TglUniform4f(value location, value v1, value v2, value v3, value v4) {
+  glUniform4f(Int_val(location), Double_val(v1), Double_val(v2), Double_val(v3), Double_val(v4));
+}
+
+
 void TglBufferData(value target, value data, value usage) {
-  CAMLparam3(target, data, usage);
   glBufferData(Int_val(target), caml_ba_byte_size(Caml_ba_array_val(data)), Caml_ba_data_val(data), Int_val(usage));
-  CAMLreturn0;
 }
 
 void TglViewport(value x, value y, value width, value height) {
-  CAMLparam4(x, y, width, height);
   glViewport(Int_val(x), Int_val(y), Int_val(width), Int_val(height));
-  CAMLreturn0;
 }
 
 void TglClear(value mask) {
-  CAMLparam1(mask);
   glClear(Int_val(mask));
-  CAMLreturn0;
 }
 
-CAMLprim value TglGetUniformLocation(value program, value name) {
-  CAMLparam2(program, name);
-  CAMLreturn(Val_int(glGetUniformLocation(Int_val(program), String_val(name))));
+value TglGetUniformLocation(value program, value name) {
+  return (Val_int(glGetUniformLocation(Int_val(program), String_val(name))));
 }
 
-CAMLprim value TglGetAttribLocation(value program, value name) {
-  CAMLparam2(program, name);
-  CAMLreturn(Val_int(glGetAttribLocation(Int_val(program), String_val(name))));
+value TglGetAttribLocation(value program, value name) {
+  return (Val_int(glGetAttribLocation(Int_val(program), String_val(name))));
 }
 
 void TglEnableVertexAttribArray(value attrib) {
-  CAMLparam1(attrib);
   glEnableVertexAttribArray(Int_val(attrib));
-  CAMLreturn0;
 }
 
 void TglVertexAttribPointer_native(value index, value size, value typ, value normalize, value stride, value offset) {
@@ -261,79 +223,79 @@ void TglVertexAttribPointer_bytecode(value * argv, int argn) {
   TglVertexAttribPointer_native(argv[0], argv[1], argv[2], argv[3], argv[4], argv[5]);
 }
 
-CAMLprim value TglGetProgramiv(value program, value pname) {
-  CAMLparam2(program, pname);
-  GLint ret;
-  glGetProgramiv(Int_val(program), Int_val(pname), &ret);
-  CAMLreturn(Val_int(ret));
+void TglVertexAttribDivisor(intnat attrib, intnat divisor) {
+  glVertexAttribDivisor(attrib, divisor);
 }
 
-CAMLprim value TglGetShaderiv(value shader, value pname) {
-  CAMLparam2(shader, pname);
+void TglVertexAttribDivisor_byte(value attrib, value divisor) {
+  glVertexAttribDivisor(Int_val(attrib), Int_val(divisor));
+}
+
+value TglGetProgramiv(value program, value pname) {
+  GLint ret;
+  glGetProgramiv(Int_val(program), Int_val(pname), &ret);
+  return (Val_int(ret));
+}
+
+value TglGetShaderiv(value shader, value pname) {
   GLint ret;
   glGetShaderiv(Int_val(shader), Int_val(pname), &ret);
-  CAMLreturn(Val_int(ret));
+  return (Val_int(ret));
 }
 
 CAMLprim value TglGetShaderInfoLog(value shader) {
   CAMLparam1(shader);
-  CAMLlocal1(ret);
 
   GLint exactLength;
   glGetShaderiv(Int_val(shader), GL_INFO_LOG_LENGTH, &exactLength);
-  GLchar *buffer = malloc(exactLength * sizeof(char));
+  GLchar buffer[exactLength];
   glGetShaderInfoLog(Int_val(shader), exactLength - 1, NULL, buffer);
 
-  ret = caml_copy_string(buffer);
-  CAMLreturn(ret);
+  CAMLreturn(caml_copy_string(buffer));
 }
 
 CAMLprim value TglGetProgramInfoLog(value program) {
   CAMLparam1(program);
-  CAMLlocal1(ret);
 
   GLint exactLength;
   glGetProgramiv(Int_val(program), GL_INFO_LOG_LENGTH, &exactLength);
 
-  GLchar *buffer = malloc(exactLength * sizeof(char));
+  GLchar buffer[exactLength];
   glGetProgramInfoLog(Int_val(program), exactLength - 1, NULL, buffer);
-  ret = caml_copy_string(buffer);
-  CAMLreturn(ret);
+
+  CAMLreturn(caml_copy_string(buffer));
 }
 
 CAMLprim value TglGetShaderSource(value shader) {
   CAMLparam1(shader);
-  CAMLlocal1(ret);
 
   GLint exactLength;
   glGetShaderiv(Int_val(shader), GL_SHADER_SOURCE_LENGTH, &exactLength);
 
-  GLchar *buffer = malloc(exactLength * sizeof(char));
+  GLchar buffer[exactLength];
   glGetShaderSource(Int_val(shader), exactLength - 1, NULL, buffer);
-  ret = caml_copy_string(buffer);
-  CAMLreturn(ret);
+
+  CAMLreturn(caml_copy_string(buffer));
 }
 
 void TglDrawArrays(value mode, value first, value count) {
-  CAMLparam3(mode, first, count);
   glDrawArrays(Int_val(mode), Int_val(first), Int_val(count));
-  CAMLreturn0;
 }
 
 void TglDrawElements(value mode, value first, value typ, value offset) {
-  CAMLparam4(mode, first, typ, offset);
   long o = (long)Int_val(offset);
   glDrawElements(Int_val(mode), Int_val(first), Int_val(typ), (const GLvoid *)o);
-  CAMLreturn0;
+}
+
+void TglDrawElementsInstanced(value mode, value first, value typ, value indices, value primcount) {
+  long o = (long)Int_val(indices);
+  glDrawElementsInstanced(Int_val(mode), Int_val(first), Int_val(typ), (const GLvoid *)o, Int_val(primcount));
 }
 
 void TglUniformMatrix4fv(value location, value transpose, value val) {
-  CAMLparam3(location, transpose, val);
-  int size = Wosize_val(val);
-  float *matrix = malloc(sizeof(float) * size);
-  for (int i = 0; i < size; ++i){
+  float matrix[16];
+  for (int i = 0; i < 16; ++i){
     matrix[i] = Double_field(val, i);
   }
   glUniformMatrix4fv(Int_val(location), 1, Bool_val(transpose), matrix);
-  CAMLreturn0;
 }
