@@ -2,6 +2,6 @@
   "name": "tgls",
   "version": "0.8.4",
   "devDependencies": {
-    "bs-platform": "bsansouci/bucklescript#simple-native-compilation"
+    "bs-platform": "bsansouci/bsb-native"
   }
 }
