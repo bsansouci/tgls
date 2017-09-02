@@ -1,6 +1,6 @@
 lib: tgls_new.o
 
-tgls_new.o:
+tgls_new.o: src/tgls_new.c
 	ocamlopt.opt -c src/tgls_new.c
 
 # ocamlopt.opt -ccopt -L  -ccopt /opt/X11/lib -ccopt -lGLESv2 bigarray.cmxa tgls_new.o src/tgls_new.cmx
