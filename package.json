@@ -3,8 +3,5 @@
   "version": "0.8.4",
   "devDependencies": {
     "bs-platform": "bsansouci/bucklescript#simple-native-compilation"
-  },
-  "peerDependencies": {
-    "@opam-alpha/ocaml": ">= 4.01.0"
   }
 }
