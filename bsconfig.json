@@ -4,9 +4,9 @@
     "dir": "src",
     "files": ["tgls_new.re"]
   },
-  "static_libraries": [
+  "static-libraries": [
     "tgls_new.o",
   ],
-  "build_script": "make lib",
+  "build-script": "make lib",
   "allowed-build-kinds": ["bytecode", "native"],
 }
