@@ -9,4 +9,5 @@
   ],
   "build-script": "make lib",
   "allowed-build-kinds": ["bytecode", "native"],
+  "refmt": 3
 }

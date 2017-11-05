@@ -1,6 +1,6 @@
 type programT;
 
-external createProgram : unit => programT = "TglCreateProgram" [@@noalloc];
+[@noalloc] external createProgram : unit => programT = "TglCreateProgram";
 
 type shaderT;
 
@@ -8,20 +8,20 @@ let gl_vertex_shader = 35633;
 
 let gl_fragment_shader = 35632;
 
-external createShader : int => shaderT = "TglCreateShader" [@@noalloc];
+[@noalloc] external createShader : int => shaderT = "TglCreateShader";
 
-external attachShader : program::programT => shader::shaderT => unit =
-  "TglAttachShader" [@@noalloc];
+[@noalloc] external attachShader : (~program: programT, ~shader: shaderT) => unit =
+  "TglAttachShader";
 
-external deleteShader : shaderT => unit = "TglDeleteShader" [@@noalloc];
+[@noalloc] external deleteShader : shaderT => unit = "TglDeleteShader";
 
-external shaderSource : shaderT => array string => unit = "TglShaderSource";
+external shaderSource : (shaderT, array(string)) => unit = "TglShaderSource";
 
-external compileShader : shaderT => unit = "TglCompileShader" [@@noalloc];
+[@noalloc] external compileShader : shaderT => unit = "TglCompileShader";
 
-external linkProgram : programT => unit = "TglLinkProgram" [@@noalloc];
+[@noalloc] external linkProgram : programT => unit = "TglLinkProgram";
 
-external useProgram : programT => unit = "TglUseProgram" [@@noalloc];
+[@noalloc] external useProgram : programT => unit = "TglUseProgram";
 
 type bufferT;
 
@@ -33,22 +33,23 @@ let gl_pixel_pack_buffer = 35051;
 
 let gl_pixel_unpack_buffer = 35052;
 
-external bindBuffer : target::int => buffer::bufferT => unit = "TglBindBuffer" [@@noalloc];
+[@noalloc] external bindBuffer : (~target: int, ~buffer: bufferT) => unit = "TglBindBuffer";
 
 /* might not work because passing stack pointer instead of heap pointer (see warning) */
-external genBuffers : int => array bufferT = "TglGenBuffers";
+external genBuffers : int => array(bufferT) = "TglGenBuffers";
 
-external genBuffer : unit => bufferT = "TglGenBuffer" [@@noalloc];
+[@noalloc] external genBuffer : unit => bufferT = "TglGenBuffer";
 
-external clearColor : red::float => green::float => blue::float => alpha::float => unit =
-  "TglClearColor" [@@noalloc];
+[@noalloc]
+external clearColor : (~red: float, ~green: float, ~blue: float, ~alpha: float) => unit =
+  "TglClearColor";
 
 type textureT;
 
 /* might not work because passing stack pointer instead of heap pointer (see warning) */
-external genTextures : int => array textureT = "TglGenTextures";
+external genTextures : int => array(textureT) = "TglGenTextures";
 
-external genTexture : unit => textureT = "TglGenTexture" [@@noalloc];
+[@noalloc] external genTexture : unit => textureT = "TglGenTexture";
 
 let gl_texture0 = 33984;
 
@@ -114,7 +115,7 @@ let gl_texture30 = 34014;
 
 let gl_texture31 = 34015;
 
-external activeTexture : int => unit = "TglActiveTexture" [@@noalloc];
+[@noalloc] external activeTexture : int => unit = "TglActiveTexture";
 
 let gl_texture_1d = 3552;
 
@@ -124,18 +125,20 @@ let gl_texture_3d = 32879;
 
 let gl_texture_cube_map = 34067;
 
-external bindTexture : target::int => texture::textureT => unit = "TglBindTexture" [@@noalloc];
+[@noalloc] external bindTexture : (~target: int, ~texture: textureT) => unit = "TglBindTexture";
 
 external texSubImage2D :
-  target::int =>
-  level::int =>
-  xoffset::int =>
-  yoffset::int =>
-  width::int =>
-  height::int =>
-  format::int =>
-  type_::int =>
-  pixels::Bigarray.Array1.t 'a 'b Bigarray.c_layout =>
+  (
+    ~target: int,
+    ~level: int,
+    ~xoffset: int,
+    ~yoffset: int,
+    ~width: int,
+    ~height: int,
+    ~format: int,
+    ~type_: int,
+    ~pixels: Bigarray.Array1.t('a, 'b, Bigarray.c_layout)
+  ) =>
   unit =
   "TglTexSubImage2D_bytecode" "TglTexSubImage2D_native";
 
@@ -168,8 +171,8 @@ let gl_depth_texture_mode = 34891;
 
 let gl_generate_mipmap = 33169;
 
-external texParameteri : target::int => pname::int => param::int => unit =
-  "TglTexParameteri" [@@noalloc];
+[@noalloc] external texParameteri : (~target: int, ~pname: int, ~param: int) => unit =
+  "TglTexParameteri";
 
 let gl_alpha_test = 3008;
 
@@ -324,9 +327,9 @@ let gl_vertex_program_point_size = 34370;
 /* only in glext */
 let gl_vertex_program_two_side = 34371;
 
-external enable : int => unit = "TglEnable" [@@noalloc];
+[@noalloc] external enable : int => unit = "TglEnable";
 
-external disable : int => unit = "TglDisable" [@@noalloc];
+[@noalloc] external disable : int => unit = "TglDisable";
 
 let gl_zero = 0;
 
@@ -358,14 +361,11 @@ let gl_constant_alpha = 32771;
 
 let gl_one_minus_constant_alpha = 32772;
 
-external blendFunc : sfactor::int => dfactor::int => unit = "TglBlendFunc" [@@noalloc];
+[@noalloc] external blendFunc : (~sfactor: int, ~dfactor: int) => unit = "TglBlendFunc";
 
 external readPixels_RGBA :
-  x::int =>
-  y::int =>
-  width::int =>
-  height::int =>
-  Bigarray.Array1.t int Bigarray.int8_unsigned_elt Bigarray.c_layout =
+  (~x: int, ~y: int, ~width: int, ~height: int) =>
+  Bigarray.Array1.t(int, Bigarray.int8_unsigned_elt, Bigarray.c_layout) =
   "TglReadPixels_RGBA";
 
 let gl_proxy_texture_2d = 32868;
@@ -490,30 +490,34 @@ let gl_srgb_alpha = 35906;
 
 let gl_srgb8_alpha8 = 35907;
 
+[@noalloc]
 external texImage2D_RGBA :
-  target::int =>
-  level::int =>
-  width::int =>
-  height::int =>
-  border::int =>
-  data::Bigarray.Array1.t 'a 'b Bigarray.c_layout =>
+  (
+    ~target: int,
+    ~level: int,
+    ~width: int,
+    ~height: int,
+    ~border: int,
+    ~data: Bigarray.Array1.t('a, 'b, Bigarray.c_layout)
+  ) =>
   unit =
-  "TglTexImage2D_RGBA_bytecode" "TglTexImage2D_RGBA_native" [@@noalloc];
+  "TglTexImage2D_RGBA_bytecode" "TglTexImage2D_RGBA_native";
 
 type uniformT;
 
-external uniform1i : location::uniformT => val::int => unit = "TglUniform1i" [@@noalloc];
+[@noalloc] external uniform1i : (~location: uniformT, ~value: int) => unit = "TglUniform1i";
 
-external uniform1f : location::uniformT => val::float => unit = "TglUniform1f" [@@noalloc];
+[@noalloc] external uniform1f : (~location: uniformT, ~value: float) => unit = "TglUniform1f";
 
-external uniform2f : location::uniformT => v1::float => v2::float => unit =
-  "TglUniform2f" [@@noalloc];
+[@noalloc] external uniform2f : (~location: uniformT, ~v1: float, ~v2: float) => unit =
+  "TglUniform2f";
 
-external uniform3f : location::uniformT => v1::float => v2::float => v3::float => unit =
-  "TglUniform3f" [@@noalloc];
+[@noalloc] external uniform3f : (~location: uniformT, ~v1: float, ~v2: float, ~v3: float) => unit =
+  "TglUniform3f";
 
-external uniform4f : location::uniformT => v1::float => v2::float => v3::float => v4::float => unit =
-  "TglUniform4f" [@@noalloc];
+[@noalloc]
+external uniform4f : (~location: uniformT, ~v1: float, ~v2: float, ~v3: float, ~v4: float) => unit =
+  "TglUniform4f";
 
 let gl_stream_draw = 35040;
 
@@ -533,12 +537,13 @@ let gl_dynamic_read = 35049;
 
 let gl_dynamic_copy = 35050;
 
+[@noalloc]
 external bufferData :
-  target::int => data::Bigarray.Array1.t 'a 'b Bigarray.c_layout => usage::int => unit =
-  "TglBufferData" [@@noalloc];
+  (~target: int, ~data: Bigarray.Array1.t('a, 'b, Bigarray.c_layout), ~usage: int) => unit =
+  "TglBufferData";
 
-external viewport : x::int => y::int => width::int => height::int => unit =
-  "TglViewport" [@@noalloc];
+[@noalloc] external viewport : (~x: int, ~y: int, ~width: int, ~height: int) => unit =
+  "TglViewport";
 
 let gl_color_buffer_bit = 16384;
 
@@ -548,14 +553,15 @@ let gl_accum_buffer_bit = 512;
 
 let gl_stencil_buffer_bit = 1024;
 
-external clear : int => unit = "TglClear" [@@noalloc];
+[@noalloc] external clear : int => unit = "TglClear";
 
-external getUniformLocation : program::programT => name::string => uniformT =
+external getUniformLocation : (~program: programT, ~name: string) => uniformT =
   "TglGetUniformLocation";
 
 type attribT;
 
-external getAttribLocation : program::programT => name::string => attribT = "TglGetAttribLocation";
+external getAttribLocation : (~program: programT, ~name: string) => attribT =
+  "TglGetAttribLocation";
 
 external enableVertexAttribArray : attribT => unit = "TglEnableVertexAttribArray";
 
@@ -576,10 +582,10 @@ let gl_float = 5126;
 let gl_double = 5130;
 
 external vertexAttribPointer :
-  index::attribT => size::int => typ::int => normalize::bool => stride::int => offset::int => unit =
+  (~index: attribT, ~size: int, ~typ: int, ~normalize: bool, ~stride: int, ~offset: int) => unit =
   "TglVertexAttribPointer_bytecode" "TglVertexAttribPointer_native";
 
-external vertexAttribDivisor : attribute::attribT => divisor::int => unit =
+external vertexAttribDivisor : (~attribute: attribT, ~divisor: int) => unit =
   "TglVertexAttribDivisor_byte";
 
 let gl_shader_type = 35663;
@@ -606,9 +612,9 @@ let gl_active_attributes = 35721;
 
 let gl_active_attribute_max_length = 35722;
 
-external getProgramiv : program::programT => pname::int => int = "TglGetProgramiv" [@@noalloc];
+[@noalloc] external getProgramiv : (~program: programT, ~pname: int) => int = "TglGetProgramiv";
 
-external getShaderiv : shader::shaderT => pname::int => int = "TglGetShaderiv" [@@noalloc];
+[@noalloc] external getShaderiv : (~shader: shaderT, ~pname: int) => int = "TglGetShaderiv";
 
 external getShaderInfoLog : shaderT => string = "TglGetShaderInfoLog";
 
@@ -636,17 +642,19 @@ let gl_quad_strip = 8;
 
 let gl_polygon = 9;
 
-external drawArrays : mode::int => first::int => count::int => unit = "TglDrawArrays" [@@noalloc];
+[@noalloc] external drawArrays : (~mode: int, ~first: int, ~count: int) => unit = "TglDrawArrays";
 
-external drawElements : mode::int => count::int => typ::int => offset::int => unit =
-  "TglDrawElements" [@@noalloc];
+[@noalloc] external drawElements : (~mode: int, ~count: int, ~typ: int, ~offset: int) => unit =
+  "TglDrawElements";
 
+[@noalloc]
 external drawElementsInstanced :
-  mode::int => count::int => type_::int => indices::int => primcount::int => unit =
-  "TglDrawElementsInstanced" [@@noalloc];
+  (~mode: int, ~count: int, ~type_: int, ~indices: int, ~primcount: int) => unit =
+  "TglDrawElementsInstanced";
 
-external uniformMatrix4fv : location::uniformT => transpose::bool => value::array float => unit =
-  "TglUniformMatrix4fv" [@@noalloc];
+[@noalloc]
+external uniformMatrix4fv : (~location: uniformT, ~transpose: bool, ~value: array(float)) => unit =
+  "TglUniformMatrix4fv";
 /*{
     module Sdl = Tsdl_new;
     let create_window gl::(maj, min) => {
