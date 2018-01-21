@@ -7,7 +7,7 @@
 #include <caml/fail.h>
 #include <caml/bigarray.h>
 
-#include <OpenGL/Gl3.h>
+#include "glad/glad.h"
 
 CAMLprim value TglCreateProgram() {
   return (Val_int(glCreateProgram()));
@@ -224,11 +224,11 @@ void TglVertexAttribPointer_bytecode(value * argv, int argn) {
 }
 
 void TglVertexAttribDivisor(intnat attrib, intnat divisor) {
-  glVertexAttribDivisor(attrib, divisor);
+  // glVertexAttribDivisor(attrib, divisor);
 }
 
 void TglVertexAttribDivisor_byte(value attrib, value divisor) {
-  glVertexAttribDivisor(Int_val(attrib), Int_val(divisor));
+  // glVertexAttribDivisor(Int_val(attrib), Int_val(divisor));
 }
 
 value TglGetProgramiv(value program, value pname) {
@@ -289,7 +289,7 @@ void TglDrawElements(value mode, value first, value typ, value offset) {
 
 void TglDrawElementsInstanced(value mode, value first, value typ, value indices, value primcount) {
   long o = (long)Int_val(indices);
-  glDrawElementsInstanced(Int_val(mode), Int_val(first), Int_val(typ), (const GLvoid *)o, Int_val(primcount));
+  // glDrawElementsInstanced(Int_val(mode), Int_val(first), Int_val(typ), (const GLvoid *)o, Int_val(primcount));
 }
 
 void TglUniformMatrix4fv(value location, value transpose, value val) {

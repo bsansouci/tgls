@@ -1,3 +1,5 @@
+[@noalloc] external gladLoadGL : unit => unit = "gladLoadGL";
+
 type programT;
 
 [@noalloc] external createProgram : unit => programT = "TglCreateProgram";
@@ -655,6 +657,23 @@ external drawElementsInstanced :
 [@noalloc]
 external uniformMatrix4fv : (~location: uniformT, ~transpose: bool, ~value: array(float)) => unit =
   "TglUniformMatrix4fv";
+
+type imageT = {
+  width: int,
+  height: int,
+  channels: int,
+  data: Bigarray.Array1.t(int, Bigarray.int8_unsigned_elt, Bigarray.c_layout)
+};
+
+/***
+ * Internal dep on SOIL. This helps us load a bunch of different formats of image and get a `unsigned char*`
+ * which we transform into an `array int` and then a bigarray before passing it to tgls.
+ *
+ * This is very unefficient as we end we 3 copies of the data (1 original and 2 copies). We should be able
+ * to pass in the C `char*` directly to tgls if we can figure out how ctypes works.
+ */
+external soilLoadImage : (~filename: string, ~loadOption: int) => option(imageT) = "load_image";
+
 /*{
     module Sdl = Tsdl_new;
     let create_window gl::(maj, min) => {
