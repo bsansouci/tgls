@@ -13,4 +13,4 @@ gcc("lib" +/ "soil_wrapper.o",  ["src" +/ "soil_wrapper.c"]);
 
 gcc(~includes=["glad" +/ "include"], "lib" +/ "glad.o",     ["glad" +/ "src" +/ "glad.c"]);
 
-gcc(~includes=["glad" +/ "include"], "lib" +/ "tgls_new.o", ["src" +/ "tgls_new.c"]);
+gcc(~includes=["glad" +/ "include"], "lib" +/ "tgls_new.o", ["src" +/ "tgls_new.c"], ~flags=["-std=c99"]);

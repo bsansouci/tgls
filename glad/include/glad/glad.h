@@ -54,6 +54,8 @@ struct gladGLversionStruct {
 };
 
 typedef void* (* GLADloadproc)(const char *name);
+typedef void* (APIENTRYP PFNWGLGETPROCADDRESSPROC_PRIVATE)(const char*);
+static PFNWGLGETPROCADDRESSPROC_PRIVATE gladGetProcAddressPtr;
 
 #ifndef GLAPI
 # if defined(GLAD_GLAPI_EXPORT)

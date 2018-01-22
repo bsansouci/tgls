@@ -15,25 +15,29 @@
 
 #define SOIL_CHECK_FOR_GL_ERRORS 0
 
+
+// !!!! ben and avery were here!!!
+#include "glad/glad.h"
+
+
 #ifdef WIN32
 	#define WIN32_LEAN_AND_MEAN
 	#include <windows.h>
 	#include <wingdi.h>
-	#include <GL/gl.h>
+	// #include <GL/gl.h>
 #elif defined(__APPLE__) || defined(__APPLE_CC__)
 	/*	I can't test this Apple stuff!	*/
 	
 	
-	// !!!! ben and avery were here!!!
-	#include "glad/glad.h"
+	
 	// #include <OpenGL/gl.h>
 	
 	
 	#include <Carbon/Carbon.h>
 	#define APIENTRY
 #else
-	#include <GL/gl.h>
-	#include <GL/glx.h>
+	// #include <GL/gl.h>
+	// #include <GL/glx.h>
 #endif
 
 #include "SOIL.h"
@@ -2002,7 +2006,7 @@ int query_DXT_capability( void )
 				CFRelease( bundle );
 			#else
 				ext_addr = (P_SOIL_GLCOMPRESSEDTEXIMAGE2DPROC)
-						glXGetProcAddressARB
+						gladGetProcAddressPtr
 						(
 							(const GLubyte *)"glCompressedTexImage2DARB"
 						);
