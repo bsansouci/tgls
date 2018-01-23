@@ -82,6 +82,9 @@
   #ifdef __cplusplus
   #define __forceinline inline
   #else
+   #ifdef __forceinline
+      #undef __forceinline
+   #endif
   #define __forceinline
   #endif
 #endif
