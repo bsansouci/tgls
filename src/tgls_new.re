@@ -674,6 +674,9 @@ type imageT = {
  */
 external soilLoadImage : (~filename: string, ~loadOption: int) => option(imageT) = "load_image";
 
+/* Load image from a binary blob */
+external soilLoadImageFromMemory : (~data: string, ~loadOption: int) => option(imageT) = "load_image_from_memory";
+
 /*{
     module Sdl = Tsdl_new;
     let create_window gl::(maj, min) => {
