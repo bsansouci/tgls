@@ -52,7 +52,7 @@ CAMLprim value load_image_from_memory(value string, value force_channels) {
   record_image_data = caml_alloc_small(4, 0);
   int force_channels_internal = Int_val(force_channels);
   int width, height, realChannels;
-  unsigned char* data = SOIL_load_image_from_memory(String_val(string), caml_string_length(string), &width, &height, &realChannels, force_channels_internal);
+  unsigned char* data = SOIL_load_image_from_memory((unsigned char *)String_val(string), caml_string_length(string), &width, &height, &realChannels, force_channels_internal);
   if (data == NULL) {
     CAMLreturn (Val_none);
   } else {
