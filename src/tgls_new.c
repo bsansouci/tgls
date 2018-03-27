@@ -104,6 +104,36 @@ value TglGenTexture() {
   return (Val_int(textures));
 }
 
+CAMLprim value TglGenFramebuffers(value count) {
+  CAMLparam1(count);
+  CAMLlocal1(ret);
+
+  int size = Int_val(count);
+  unsigned int framebuffers[size];
+  glGenFramebuffers(size, framebuffers);
+
+  ret = caml_alloc_small(size, 0);
+  for (int i = 0; i < size; ++i) {
+    Field(ret, i) = Val_int(framebuffers[i]);
+  }
+
+  CAMLreturn(ret);
+}
+
+value TglGenFramebuffer() {
+  unsigned int framebuffers = 0;
+  glGenFramebuffers(1, &framebuffers);
+  return (Val_int(framebuffers));
+}
+
+void TglBindFramebuffer(value kind, value framebuffer) {
+  glBindFramebuffer(Int_val(kind), Int_val(framebuffer));
+}
+
+void TglBindDefaultFramebuffer(value kind) {
+  glBindFramebuffer(Int_val(kind), 0);
+}
+
 void TglActiveTexture(value textureUnit) {
   glActiveTexture(Int_val(textureUnit));
 }
@@ -111,6 +141,11 @@ void TglActiveTexture(value textureUnit) {
 void TglBindTexture(value kind, value texture) {
   glBindTexture(Int_val(kind), Int_val(texture));
 }
+
+void TglFramebufferTexture2D(value kind, value color, value textureKind, value texture, value level) {
+  glFramebufferTexture2D(Int_val(kind), Int_val(color), Int_val(textureKind), Int_val(texture), Int_val(level));
+}
+
 
 void TglTexSubImage2D_native(value target, value level, value xoffset, value yoffset, value width, value height, value format, value type, value pixels) {
   CAMLparam5(target, level, xoffset, yoffset, width);
@@ -164,6 +199,10 @@ void TglTexImage2D_RGBA_native(value target, value level, value width, value hei
 
 void TglTexImage2D_RGBA_bytecode(value * argv, int argn) {
   TglTexImage2D_RGBA_native(argv[0], argv[1], argv[2], argv[3], argv[4], argv[5]);
+}
+
+void TglTexImage2D_null(value target, value level, value width, value height, value border) {
+  glTexImage2D(Int_val(target), Int_val(level), 4, Int_val(width), Int_val(height), Int_val(border), GL_RGBA, GL_UNSIGNED_BYTE, NULL);
 }
 
 void TglUniform1i(value location, value v) {

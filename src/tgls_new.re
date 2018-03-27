@@ -53,6 +53,23 @@ external genTextures : int => array(textureT) = "TglGenTextures";
 
 [@noalloc] external genTexture : unit => textureT = "TglGenTexture";
 
+type framebufferT;
+
+external genFramebuffers : int => array(framebufferT) = "TglGenFramebuffers";
+
+[@noalloc] external genFramebuffer : unit => framebufferT = "TglGenFramebuffer";
+
+let gl_framebuffer = 36160;
+
+let gl_color_attachment0 = 36064;
+
+[@noalloc] external bindFramebuffer : int => framebufferT => unit = "TglBindFramebuffer";
+
+[@noalloc] external bindDefaultFramebuffer : int => unit = "TglBindDefaultFramebuffer";
+
+[@noalloc] external framebufferTexture2D : (~target:int, ~attachment:int, ~texTarget:int, ~texture:textureT, ~level:int) => unit = "TglFramebufferTexture2D";
+
+
 let gl_texture0 = 33984;
 
 let gl_texture1 = 33985;
@@ -491,6 +508,18 @@ let gl_srgb8 = 35905;
 let gl_srgb_alpha = 35906;
 
 let gl_srgb8_alpha8 = 35907;
+
+[@noalloc]
+external texImage2D_null :
+  (
+    ~target: int,
+    ~level: int,
+    ~width: int,
+    ~height: int,
+    ~border: int
+  ) =>
+  unit =
+  "TglTexImage2D_null";
 
 [@noalloc]
 external texImage2D_RGBA :
