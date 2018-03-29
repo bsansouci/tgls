@@ -29,9 +29,6 @@ static void* get_proc(const char *namez);
 #include <windows.h>
 static HMODULE libGL;
 
-typedef void* (APIENTRYP PFNWGLGETPROCADDRESSPROC_PRIVATE)(const char*);
-static PFNWGLGETPROCADDRESSPROC_PRIVATE gladGetProcAddressPtr;
-
 static
 int open_gl(void) {
     libGL = LoadLibraryW(L"opengl32.dll");
