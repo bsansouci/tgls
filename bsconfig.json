@@ -4,17 +4,6 @@
     "dir": "src",
     "files": ["tgls_new.re"]
   },
-  "static-libraries": [
-    "lib/glad.o",
-    
-    "lib/image_helper.o",
-    "lib/stb_image_aug.o",
-    "lib/image_DXT.o",
-    "lib/SOIL.o",
-    
-    "lib/soil_wrapper.o",
-    "lib/tgls_new.o",
-  ],
   "build-script": "build_script.re",
   "allowed-build-kinds": ["bytecode", "native"],
   "refmt": 3
