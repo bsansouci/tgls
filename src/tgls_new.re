@@ -876,3 +876,11 @@ external soilLoadImageFromMemory : (~data: string, ~loadOption: int) => option(i
     Sdl.quit ()
   };
   */
+
+[@noalloc] external checkFramebufferStatus : unit => int = "TglCheckFramebufferStatus";
+type renderBufferT;
+[@noalloc] external genRenderbuffers : unit => renderBufferT = "TglGenRenderbuffers";
+[@noalloc] external bindRenderbuffer : renderBufferT => unit = "TglBindRenderbuffer";
+[@noalloc] external bindDefaultRenderbuffer : unit => unit = "TglBindDefaultRenderbuffer";
+[@noalloc] external renderbufferStorage : int => int => unit = "TglRenderbufferStorage";
+[@noalloc] external framebufferRenderbuffer : renderBufferT => unit = "TglFramebufferRenderbuffer";

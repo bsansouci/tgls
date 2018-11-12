@@ -338,3 +338,31 @@ void TglUniformMatrix4fv(value location, value transpose, value val) {
   }
   glUniformMatrix4fv(Int_val(location), 1, Bool_val(transpose), matrix);
 }
+
+CAMLprim value TglCheckFramebufferStatus() {
+  CAMLparam0();
+  CAMLreturn(Val_int(glCheckFramebufferStatus(GL_FRAMEBUFFER)));
+}
+
+
+CAMLprim value TglGenRenderbuffers() {
+  CAMLparam0();
+  GLuint colorRenderbuffer = 0;
+  glGenRenderbuffers(1, &colorRenderbuffer);
+  CAMLreturn(Val_int(colorRenderbuffer));
+}
+
+void TglBindRenderbuffer(value colorRenderbuffer) {
+  glBindRenderbuffer(GL_RENDERBUFFER, Int_val(colorRenderbuffer));
+}
+
+void TglBindDefaultRenderbuffer() {
+  glBindRenderbuffer(GL_RENDERBUFFER, 0);
+}
+
+void TglRenderbufferStorage(value width, value height) {
+  glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, Int_val(width), Int_val(height));
+}
+void TglFramebufferRenderbuffer(value renderbuffer) {
+  glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, Int_val(renderbuffer));
+}
