@@ -1,0 +1,16 @@
+
+build image_helper.o : cc $src_root_dir/SOIL/src/image_helper.c
+build stb_image_aug.o : cc $src_root_dir/SOIL/src/stb_image_aug.c
+build image_DXT.o : cc $src_root_dir/SOIL/src/image_DXT.c
+build SOIL.o : cc $src_root_dir/SOIL/src/SOIL.c
+  extra_args = -I $src_root_dir/glad/include
+
+build soil_wrapper.o : cc $src_root_dir/src/soil_wrapper.c
+
+build glad.o : cc $src_root_dir/glad/src/glad.c
+  extra_args = -I $src_root_dir/glad/include
+
+build tgls_new.o : cc $src_root_dir/src/tgls_new.c
+  extra_args = -std=c99 -I $src_root_dir/glad/include
+
+build tgls_bindings.a: ar image_helper.o stb_image_aug.o image_DXT.o SOIL.o soil_wrapper.o glad.o tgls_new.o

@@ -4,7 +4,8 @@
     "dir": "src",
     "files": ["tgls_new.re"]
   },
-  "build-script": "build_script.re",
+  // "build-script": "build_script.re",
   "allowed-build-kinds": ["bytecode", "native"],
+  "static-libraries": ["tgls_bindings.a"],
   "refmt": 3
 }
