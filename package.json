@@ -1,5 +1,5 @@
 {
-  "name": "tgls",
+  "name": "@bsansouci/tgls",
   "version": "1.0.0",
   "devDependencies": {
     "bs-platform": "bsansouci/bsb-native"
