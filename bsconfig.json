@@ -1,5 +1,5 @@
 {
-  "name": "Tgls",
+  "name": "@bsansouci/tgls",
   "sources": {
     "dir": "src",
     "files": ["tgls_new.re"]
