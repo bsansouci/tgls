@@ -2,7 +2,7 @@
   "name": "@bsansouci/tgls",
   "sources": {
     "dir": "src",
-    "files": ["tgls_new.re"]
+    "files": ["bigarray.ml", "tgls_new.re"]
   },
   // "build-script": "build_script.re",
   "allowed-build-kinds": ["bytecode", "native"],
